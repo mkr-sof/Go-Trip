@@ -1,0 +1,28 @@
+.feedContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+  }
+ 
+  .postList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .noPosts {
+    text-align: center;
+    color: gray;
+  }
+  
+  .scrollUp {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #007bff;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+  }
+  
