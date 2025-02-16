@@ -8,7 +8,7 @@ function Posts({posts}){
                 <div key={index} className={styles.post}>
                     <h2>{post.title}</h2>
                     <p>{post.content}</p>
-                    {post.imageUrl} && <img src={post.imageUrl} alt="Post" />
+                    {post.image && <img src={post.image} alt="Post" />}
                 </div>
             ))}
         </div>

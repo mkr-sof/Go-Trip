@@ -33,39 +33,47 @@ function Signup() {
         <div className={styles.authContainer}>
             <h2>SignUp</h2>
             {error && <Error>{error}</Error>}
-            <form onSubmit={handleSubmit}>
+            <form className={styles.formContainer} onSubmit={handleSubmit}>
                 <InputField
+                    label="Full Name"
                     className={styles.authInput}
                     type="text"
-                    placeholder="Name"
+                    placeholder=" "
                     value={name}
                     onChange={(event) => setName(event.target.value)} />
                 <InputField
+                    label="Email"
                     className={styles.authInput}
                     type="email"
-                    placeholder="Email"
+                    placeholder=" "
                     value={email}
                     onChange={(event) =>
                         setEmail(event.target.value)} />
                 <InputField
+                    label="Password"
                     className={styles.authInput}
                     type="password"
-                    placeholder="Password"
+                    placeholder=" "
                     value={password}
                     onChange={(event) => setPassword(event.target.value)} />
                 <InputField
+                    label="Confirm Password"
                     className={styles.authInput}
                     type="password"
-                    placeholder="Confirm Password"
+                    placeholder=" "
                     value={confirmPassword}
                     onChange={(event) => setConfirmPassword(event.target.value)} />
                 <Button
+                    className={styles.authLink}
                     type="submit"
                     disabled={!name || !email || !password || !confirmPassword}
                     text="SignUp"
                 />
             </form>
-            <p>Already have an account? <button onClick={() => navigate("/login")}>Login</button></p>
+            <div>
+            <p>Already have an account?</p>
+            <span style={{color: "#007bff", cursor: "pointer"}} onClick={() => navigate("/login")}>Login</span>
+            </div>
         </div>
     );
 }

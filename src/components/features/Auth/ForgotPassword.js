@@ -30,21 +30,23 @@ const ForgotPassword = () => {
       <h2>Password Recovery</h2>
       {error && <Error>{error}</Error>}
       {message && <p style={{ color: "#107EFF" }}>{message}</p>}
-      <form onSubmit={handleSubmit}>
+      <form className={styles.formContainer} onSubmit={handleSubmit}>
         <InputField
+          label="Your Email"
           className={styles.authInput}
           type="email"
-          placeholder="Your Email"
+          placeholder=" "
           value={email}
           onChange={(event) => setEmail(event.target.value)}
         />
         <Button 
+        className={styles.authLink}
         type="submit"
         text="Submit"
         />
       </form>
       <p>
-        <button onClick={() => navigate("/login")}>Back</button>
+      <span style={{color: "#007bff", margin: "5px", cursor: "pointer"}} onClick={() => navigate("/login")}>Back</span>
       </p>
     </div>
   );

@@ -8,7 +8,7 @@ import Profile from "components/features/Profile/Profile";
 
 function App() {
   return (
-    <Router>
+  
       <Routes>
         <Route path="/" element={<Feed />} />
         <Route path="/login" element={<Login />} />
@@ -16,7 +16,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
-    </Router>
+    
   );
 }
 

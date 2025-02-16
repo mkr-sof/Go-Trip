@@ -27,30 +27,32 @@ function Login() {
         <div className={styles.authContainer}>
             <h2>Login</h2>
             {error && <Error>{error}</Error>}
-            <form onSubmit={handleSubmit}>
+            <form className={styles.formContainer} onSubmit={handleSubmit}>
                 <InputField
+                    label="Email"
                     className={styles.authInput}
                     type="email"
-                    placeholder="Email"
+                    placeholder=" "
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(event) => setEmail(event.target.value)}
                 />
                 <InputField
+                    label="Password"
                     className={styles.authInput}
                     type="password"
-                    placeholder="Пароль"
+                    placeholder=" "
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(event) => setPassword(event.target.value)}
                 />
                 <Button 
-                className={styles.authButton} 
+                className={styles.authLink}
                 type="submit"
                 text="Login"
                 />
             </form>
             <p>
-                <span style={{color: "blue", margin: "5px"}} onClick={() => navigate("/signup")}>Signup</span>
-                <span style={{color: "blue", margin: "5px"}} onClick={() => navigate("/forgot-password")}>Recover</span>
+                <span style={{color: "#007bff", margin: "5px", cursor: "pointer"}} onClick={() => navigate("/signup")}>Signup</span>
+                <span style={{color: "#007bff", margin: "5px", cursor: "pointer"}} onClick={() => navigate("/forgot-password")}>Recover</span>
             </p>
         </div>
     );

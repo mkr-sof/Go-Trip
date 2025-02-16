@@ -1,10 +1,11 @@
 import React, { useState, useEffect, lazy, Suspense } from "react";
 import Filters from "components/common/Filters/Filters";
 import { getDataFromLocalStorage } from "services/storageService";
-import styles from "./Feed.module.scss";
+import CreatePost from "components/features/Feed/CreatePost/CreatePost";
 import Description from "components/common/Description/Description";
 import Button from "components/common/Button/Button";
-
+import Welcome from "components/features/Feed/Welcome/Welcome";
+import styles from "./Feed.module.scss";
 
 const Posts = lazy(() => import("components/features/Feed/Posts/Posts"));
 
@@ -40,16 +41,23 @@ const handleFilterChange = (filter, sortOrder, allPosts) =>{
     });
     setFilteredPosts(sorted);
 }
-        
+    
+const handleNewPost = (updatedPosts) => {
+    setPosts(updatedPosts);
+    setFilteredPosts(updatedPosts);
+};
         
 return (
     <div className={styles.feedContainer}>
-        {/* <Welcome /> */}
+        <Welcome />
+
+        <CreatePost onPostCreated={handleNewPost} />
+
         {posts.length > 0 && <Filters onFilterChange={handleFilterChange} />}
         <Suspense fallback={<p>Loading more posts...</p>}>
         {(filterdedPosts || []).length > 0
         ? <Posts posts={filteredPosts}/>
-        : <Description>There are no cards in the system yet.</Description>
+        : <Description >There are no cards in the system yet.</Description>
         }
         </Suspense>
         {showScrollUp && (
