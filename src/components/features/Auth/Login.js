@@ -13,14 +13,16 @@ function Login() {
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            loginUser({ email, password });
+            await loginUser({ email, password });
             navigate("/profile");
         } catch (error) {
             setError(error.message);
         }
+    setEmail("");
+    setPassword("");
     }
 
     return (

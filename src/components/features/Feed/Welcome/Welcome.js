@@ -28,8 +28,8 @@ function Welcome() {
                 <div className={styles.authOptions}>
                     <h1>Welcome to <span className={styles.logo}>Go Trip</span>! ✈️</h1>
                     <p>Discover and share travel experiences with people from all over the world.</p>
-                        <div >
-                            <Button
+                    <div >
+                        <Button
                             className={styles.authLink}
                             onClick={() => navigate("/login")}
                             text="Sign In"
@@ -38,15 +38,15 @@ function Welcome() {
                             className={styles.authLink}
                             onClick={() => navigate("/signup")}
                             text="Sign Up"
-                        /> 
-                        </div>
-                       
-                        <p>or</p>
-                        <Button
-                            className={styles.guestButton}
-                            onClick={() => navigate("/feed")}
-                            text="Continue as Guest"
                         />
+                    </div>
+
+                    <p>or</p>
+                    <Button
+                        className={styles.guestButton}
+                        onClick={() => navigate("/feed")}
+                        text="Continue as Guest"
+                    />
                 </div>
             )}
         </div>

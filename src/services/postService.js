@@ -1,9 +1,10 @@
 import { saveDataToLocalStorage, getDataFromLocalStorage } from 'services/storageService';
 
-export const addPost = (postData) => {
+export const createPost = (post) => {
     const allPosts = getDataFromLocalStorage("allPosts") || [];
-    allPosts.push(postData);
-    saveDataToLocalStorage("allPosts", allPosts);
+    const updatedPosts = [...allPosts, post];
+    saveDataToLocalStorage("allPosts", updatedPosts);
+    return updatedPosts;
 }
 
 export const getAllPosts = () => {
@@ -13,7 +14,7 @@ export const getAllPosts = () => {
 export const updatePost = (postId, updatedData) => {
     let allPosts = getDataFromLocalStorage("allPosts") || [];
     allPosts = allPosts.map(post => 
-        post.id === postId ? {...post, ...updatePost} : post
+        post.id === postId ? {...post, ...updatedData} : post
     )
     saveDataToLocalStorage("allPosts", allPosts);
 }

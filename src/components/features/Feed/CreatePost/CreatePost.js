@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import InputField from "components/common/InputField/InputField";
 import Button from "components/common/Button/Button";
-import { getDataFromLocalStorage, saveDataToLocalStorage } from "services/storageService";
+import { getDataFromLocalStorage } from "services/storageService";
+import { getCurrentUser } from "services/authService";
+import { createPost } from "services/postService";
 import styles from "./CreatePost.module.scss";
 
 function CreatePost({onPostCreated}){
@@ -12,11 +14,8 @@ function CreatePost({onPostCreated}){
     const handleImageUpload = (event) => {
         const file = event.target.files[0];
         if(file){
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setImage(reader.result);
-            };
-            reader.readAsDataURL(file);
+            const imageURL = URL.createObjectURL(file);
+            setImage(imageURL);
         }
     };
 
@@ -24,7 +23,7 @@ function CreatePost({onPostCreated}){
         event.preventDefault();
         if(!title && !description) return;
 
-        const user = getDataFromLocalStorage("user");
+        const user = getCurrentUser();
         const newPost = {
             postId: Date.now(),
             authorId: user?.id || "guest",
@@ -36,10 +35,7 @@ function CreatePost({onPostCreated}){
             isFavorite: false
         }
 
-    const allPosts = getDataFromLocalStorage("allPosts") || [];
-    const updatedPosts = [newPost, ...allPosts];
-    saveDataToLocalStorage("allPosts", updatedPosts);
-
+    const updatedPosts = createPost(newPost);
     onPostCreated(updatedPosts);
 
     setTitle("");

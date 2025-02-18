@@ -14,7 +14,7 @@ function Signup() {
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
         if (password !== confirmPassword) {
@@ -22,11 +22,22 @@ function Signup() {
             return;
         }
         try {
-            signupUser({ name, email, password, confirmPassword });
-            navigate("/profile");
+            const userData = { name, email, password };
+            const response = await signupUser(userData);
+            console.log(userData)
+            if(response.success){
+                navigate("/profile");
+            }else{
+                setError(response.message)
+            }
+            
         } catch (error) {
             setError(error.message)
         }
+    setName("");
+    setEmail("");
+    setPassword("");
+    setConfirmPassword("");  
     }
 
     return (
