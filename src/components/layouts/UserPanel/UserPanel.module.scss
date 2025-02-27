@@ -1,0 +1,39 @@
+.userPanelContainer {
+    max-width: 250px;
+    margin: 0;
+    padding: 20px;
+    background: #2f3031;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    align-items:flex-start;
+    gap: 10px;
+}
+
+.welcomeContainer h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.welcomeContainer p {
+    font-size: 16px;
+    color: grey;
+}
+.authOptions {
+    display: flex;
+    flex-direction:row;
+    gap: 10px;
+    width: 100%;
+}
+.authLink {
+    margin: 15px;
+    
+    &:hover {
+        background: #2f33a1;
+    }
+}

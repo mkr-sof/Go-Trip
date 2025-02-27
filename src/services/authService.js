@@ -20,7 +20,7 @@ export const signupUser = async (userData) => {
     const existingUser = users.find(user => user.email === email);
 
     if(existingUser){
-        return {success: false, message: "User alredy existing!"};
+        return {success: false, message: "User alredy exists!"};
     }
     const newUser = { name, email, password };
     saveDataToLocalStorage("users", [...users, newUser]);

@@ -1,10 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
+import { getDataFromLocalStorage, saveDataToLocalStorage } from "services/storageService";
 import styles from "./PostCard.module.scss";
 
 function PostCard({ post }) {
     const [isFavorited, setIsFavorited] = useState(post.isFavorite || false);
     const handleFavorite = () => {
+        const updatedFavoriteStatus = !isFavorited;
         setIsFavorited(!isFavorited);
+
+        const allPosts = getDataFromLocalStorage("allPosts") || [];
+        console.log(allPosts);
+        const updatedPosts = allPosts.map(p => {
+            if(p.id === post.id){
+                return {...p, isFavorite: updatedFavoriteStatus};
+            }
+            return p;
+        });
+        saveDataToLocalStorage("allPosts", updatedPosts);
     };
 
     return (

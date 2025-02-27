@@ -6,7 +6,7 @@ import InputField from "components/common/InputField/InputField";
 import Button from "components/common/Button/Button";
 import styles from "./Auth.module.scss";
 
-function Login() {
+function Login({onClick}) {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -47,6 +47,7 @@ function Login() {
                     onChange={(event) => setPassword(event.target.value)}
                 />
                 <Button 
+                onClick={onClick}
                 className={styles.authLink}
                 type="submit"
                 text="Login"

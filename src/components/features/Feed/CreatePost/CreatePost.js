@@ -6,7 +6,8 @@ import { getCurrentUser } from "services/authService";
 import { createPost } from "services/postService";
 import styles from "./CreatePost.module.scss";
 
-function CreatePost({onPostCreated}){
+function CreatePost({onPostCreated, onClick}){
+   
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [image, setImage] = useState("");
@@ -19,13 +20,13 @@ function CreatePost({onPostCreated}){
         }
     };
 
-    const handleCreatePost = (event) => {
+    const handleCreatePost = async (event) => {
         event.preventDefault();
         if(!title && !description) return;
 
         const user = getCurrentUser();
         const newPost = {
-            postId: Date.now(),
+            id: Date.now(),
             authorId: user?.id || "guest",
             title,
             description,
@@ -35,7 +36,7 @@ function CreatePost({onPostCreated}){
             isFavorite: false
         }
 
-    const updatedPosts = createPost(newPost);
+    const updatedPosts = await createPost(newPost);
     onPostCreated(updatedPosts);
 
     setTitle("");
@@ -71,7 +72,8 @@ function CreatePost({onPostCreated}){
                     className={styles.fileInput}
                 />
                 {image && <img src={image} alt="Preview" className={styles.imagePreview} />}
-                <Button 
+                <Button
+                onClick={onClick}
                 type="submit" 
                 text="Create"
                 className={styles.authLink}

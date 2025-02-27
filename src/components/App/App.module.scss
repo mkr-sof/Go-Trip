@@ -1,0 +1,42 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    // height: 100vh;
+}
+
+.layout {
+    display: flex;
+    flex-grow: 1;
+    gap: 20px;
+    padding: 10px;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #2f3031;
+    padding: 15px;
+    border-radius: 8px;
+    flex-shrink: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.mainContent {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.authContainer {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #2f3031;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}

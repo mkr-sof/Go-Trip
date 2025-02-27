@@ -6,7 +6,7 @@ import InputField from "components/common/InputField/InputField";
 import Button from "components/common/Button/Button";
 import styles from "./Auth.module.scss";
 
-function Signup() {
+function Signup({onClick}) {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -16,22 +16,28 @@ function Signup() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        console.log("Form submitted");
 
         if (password !== confirmPassword) {
             setError("Passwords do not match!");
             return;
         }
+        console.log("Submitting signup form...", { name, email, password });
         try {
             const userData = { name, email, password };
+            console.log("Submitting signup form...");
             const response = await signupUser(userData);
             console.log(userData)
             if(response.success){
+                // console.log("Signup successful, navigating to profile...");
                 navigate("/profile");
             }else{
+                console.error(response.message);
                 setError(response.message)
             }
             
         } catch (error) {
+            console.error("Error during signup", error);
             setError(error.message)
         }
     setName("");
@@ -75,10 +81,12 @@ function Signup() {
                     value={confirmPassword}
                     onChange={(event) => setConfirmPassword(event.target.value)} />
                 <Button
+                    onClick={onClick}
                     className={styles.authLink}
                     type="submit"
-                    disabled={!name || !email || !password || !confirmPassword}
+                    // disabled={!name || !email || !password || !confirmPassword}
                     text="SignUp"
+                    // onClick={() => console.log("Button clicked!")}
                 />
             </form>
             <div>
