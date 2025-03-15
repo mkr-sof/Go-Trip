@@ -3,7 +3,7 @@ import Filters from "components/common/Filters/Filters";
 import { isUserLoggedIn } from "services/authService";
 import { getDataFromLocalStorage } from "services/storageService";
 import CreatePost from "components/features/Feed/CreatePost/CreatePost";
-import TestCreatePost from "components/features/Feed/CreatePost/TestCreatePost";
+// import TestCreatePost from "components/features/Feed/CreatePost/TestCreatePost";
 import Description from "components/common/Description/Description";
 import Button from "components/common/Button/Button";
 // import Welcome from "components/features/Feed/Welcome/Welcome";
@@ -68,8 +68,8 @@ function Feed() {
     // }
     return (
         <div className={styles.feedContainer}>
-            {/* {isLoggedIn && <CreatePost onPostCreated={handleNewPost} />} */}
-            {isLoggedIn && <TestCreatePost onPostCreated={handleNewPost} />}
+            {isLoggedIn && <CreatePost onPostCreated={handleNewPost} />}
+            {/* {isLoggedIn && <TestCreatePost onPostCreated={handleNewPost} />} */}
 
 
             {posts.length > 0 && <Filters onFilterChange={handleFilterChange} />}

@@ -1,13 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "components/App/App";
 import Login from "components/features/Auth/Login";
-import TestLogin from "components/features/Auth/TestLogin";
 import Signup from "components/features/Auth/Signup";
-import TestSignup from "components/features/Auth/TestSignup";
 import ForgotPassword from "components/features/Auth/ForgotPassword";
 import Profile from "components/features/Profile/Profile";
 import Feed from "components/features/Feed/Feed";
 import NotFound from "components/features/NotFound/NotFound";
+import PostCard from "components/features/Feed/Posts/PostCard/PostCard";
 
 function configureRouter() {
     return createBrowserRouter([
@@ -21,12 +20,10 @@ function configureRouter() {
                 },
                 {
                     path: "login",
-                    // element: <TestLogin />
                     element: <Login />
                 },
                 {
                     path: "signup",
-                    // element: <TestSignup />
                     element: <Signup />
                 },
                 {
@@ -36,6 +33,10 @@ function configureRouter() {
                 {
                     path: "profile",
                     element: <Profile />
+                },
+                {
+                    path: "postCard",
+                    element: <PostCard />
                 },
                 {
                     path: "*",

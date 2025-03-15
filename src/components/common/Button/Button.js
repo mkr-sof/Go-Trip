@@ -2,7 +2,7 @@ import React from "react";
 import classNames from "classnames";
 import styles from "./Button.module.scss";
 
-function Button({disabled, text, onClick, className}) {
+function Button({disabled, text, onClick, className, type = 'button'}) {
     const btnClassName = classNames(
         styles.button, 
         className,
@@ -10,7 +10,7 @@ function Button({disabled, text, onClick, className}) {
     );
     return (
         <button 
-        type="button" 
+        type={type}
         className={btnClassName} 
         onClick={onClick}
         >
