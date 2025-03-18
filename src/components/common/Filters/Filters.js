@@ -29,9 +29,22 @@ function Filters({ onFilterChange }) {
                 </span>
             </div>
             <div>
-                <span onClick={() => setSortOrder(sortOrder)}>
-                    {sortOrder === "newest" ? "Newest First" : "Oldest First"}
+                <span
+                    className={sortOrder === "oldest" ? styles.active : ""}
+                    onClick={() => setSortOrder("oldest")}
+                >
+                    Oldest First
                 </span>
+                /
+                <span
+                    className={sortOrder === "newest" ? styles.active : ""}
+                    onClick={() => setSortOrder("newest")}
+                >
+                    Newest First
+                </span>
+                {/* <span onClick={() => setSortOrder(sortOrder === "newest" ? "oldest" : "newest")}>
+                    {sortOrder === "newest" ? "Oldest First" : "Newest First"}
+                </span> */}
             </div>
         </div>
     );

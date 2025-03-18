@@ -1,3 +1,74 @@
-.profileButton {
-    color: white;
+.userPanelContainer {
+    max-width: 250px;
+    margin: 0;
+    padding: 20px;
+    background: #2f3031;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    align-items:flex-start;
+    gap: 10px;
+}
+
+.welcomeContainer p {
+    font-size: 16px;
+    color: grey;
+}
+.profileContainer {
+    max-width: 500px;
+    // margin: 50px auto;
+    margin: auto;
+    padding: 20px;
+    background: #2f3031;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+
+    display: flex; 
+    flex-direction: column; 
+    gap: 20px; 
+  }
+  
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; 
+    align-items: center;
+    width: 100%;
+}
+.profileContainer h2 {
+    color: #fff;
+}
+
+
+.authLink {
+  margin: 15px;
+  
+  &:hover {
+      background: #2f33a1;
+  }
+}
+
+.authInput {
+    color: grey;
+    background: transparent;
+    // margin-bottom: 20px;
+    padding: 10px;
+}
+
+.authOptions {
+    display: flex;
+    flex-direction:row;
+    gap: 10px;
+    width: 100%;
+}
+.authLink {
+    margin: 15px;
+    
+    &:hover {
+        background: #2f33a1;
+    }
 }

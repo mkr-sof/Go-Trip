@@ -1,5 +1,5 @@
 import React from "react";
-import { getCurrentUser } from "services/authService";
+import { getCurrentUser, logoutUser } from "services/authService";
 import { useNavigate } from "react-router-dom";
 import Button from "components/common/Button/Button";
 import Description from "components/common/Description/Description";
@@ -10,6 +10,10 @@ function UserPanel() {
     const user = getCurrentUser();
     const navigate = useNavigate();
 
+    const handleLogout = () => {
+            logoutUser();
+            navigate("/login");
+        };
 
     if(!user){
         return (
@@ -17,10 +21,12 @@ function UserPanel() {
                 <Description className={styles.guestPanel}>Welcome, Guest!</Description>
                 <div className={styles.authOptions}>
                     <Button 
+                    type="button"
                     className={styles.authLink} 
                     onClick={() => navigate("/login")}
                     text={"Login"} />
                     <Button 
+                    type="button"
                     className={styles.authLink} 
                     onClick={() => navigate("/signup")}
                     text={"Signup"} />
@@ -28,8 +34,37 @@ function UserPanel() {
             </div>
         );
     };
+
     return (
-        <Profile />
+        <div className={styles.userPanelContainer}>
+            <Description className={styles.userPanel}>
+                <span 
+                    className={styles.usernameLink}
+                    onClick={() => navigate(`/profile/${user.id}`)} 
+                >
+                    Welcome, {user.name}!
+                </span>
+            </Description>
+            <Description className={styles.profileDescription}>
+                <a href={`mailto:${user?.email}`} className={styles.emailLink}>
+                    Email: {user?.email}
+                </a>
+            </Description>
+            <div className={styles.authOptions}>
+                <Button 
+                    className={styles.authLink}  
+                    type="button" 
+                    onClick={() => navigate("/profile/edit")} 
+                    text="Edit Profile"
+                />
+                <Button 
+                    type="button"
+                    className={styles.authLink} 
+                    onClick={handleLogout} 
+                    text={"Logout"} 
+                />
+            </div>
+        </div>
     );
 }
 

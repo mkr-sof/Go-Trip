@@ -6,7 +6,7 @@ import ForgotPassword from "components/features/Auth/ForgotPassword";
 import Profile from "components/features/Profile/Profile";
 import Feed from "components/features/Feed/Feed";
 import NotFound from "components/features/NotFound/NotFound";
-import PostCard from "components/features/Feed/Posts/PostCard/PostCard";
+import PostDetails from "components/features/Feed/Posts/PostDetails/PostDetails";
 
 function configureRouter() {
     return createBrowserRouter([
@@ -35,8 +35,16 @@ function configureRouter() {
                     element: <Profile />
                 },
                 {
-                    path: "postCard",
-                    element: <PostCard />
+                    path: "profile/edit",
+                    element: <Profile />
+                },
+                {
+                    path: "profile/:authorId",
+                    element: <Profile />
+                },
+                {
+                    path: "post/:postId",  
+                    element: <PostDetails />
                 },
                 {
                     path: "*",

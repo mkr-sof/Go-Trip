@@ -3,10 +3,8 @@ import Filters from "components/common/Filters/Filters";
 import { isUserLoggedIn } from "services/authService";
 import { getDataFromLocalStorage } from "services/storageService";
 import CreatePost from "components/features/Feed/CreatePost/CreatePost";
-// import TestCreatePost from "components/features/Feed/CreatePost/TestCreatePost";
 import Description from "components/common/Description/Description";
 import Button from "components/common/Button/Button";
-// import Welcome from "components/features/Feed/Welcome/Welcome";
 import styles from "./Feed.module.scss";
 
 const Posts = lazy(() => import("components/features/Feed/Posts/Posts"));
@@ -15,12 +13,13 @@ function Feed() {
     const [posts, setPosts] = useState([]);
     const [filteredPosts, setFilteredPosts] = useState([]);
     const [showScrollUp, setShowScrollUp] = useState(false);
-    // const [showWelcome, setShowWelcome] = useState(true);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
         const loggedInStatus = isUserLoggedIn(); // or get from local storage or context
-        setIsLoggedIn(loggedInStatus);
+        setIsLoggedIn(!!loggedInStatus);
+        setUser(loggedInStatus);
     }, []); // Run once on mount
 
 
@@ -34,7 +33,6 @@ function Feed() {
         setShowScrollUp(window.scrollY > 300);
     };
     useEffect(() => {
-
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
@@ -43,7 +41,7 @@ function Feed() {
     const handleFilterChange = (filter, sortOrder, allPosts) => {
         let filtered = allPosts;
         if (filter === "favorites") {
-            filtered = allPosts.filter(post => post.isFavorite);
+            filtered = allPosts.filter(post => post.isFavorite && post.authorId === user?.id);
         }
         const sorted = filtered.sort((a, b) => {
             return sortOrder === "newest"
@@ -58,20 +56,10 @@ function Feed() {
         setFilteredPosts(updatedPosts);
     };
 
-    // const handleContinueAsGuest = () => {
-    //     saveDataToLocalStorage("hasVisited", true);
-    //     setShowWelcome(false);
-    // };
-
-    // if (showWelcome) {
-    //     return <Welcome onContinueAsGuest={handleContinueAsGuest} />;
-    // }
     return (
         <div className={styles.feedContainer}>
             {isLoggedIn && <CreatePost onPostCreated={handleNewPost} />}
-            {/* {isLoggedIn && <TestCreatePost onPostCreated={handleNewPost} />} */}
-
-
+           
             {posts.length > 0 && <Filters onFilterChange={handleFilterChange} />}
             <Suspense fallback={<p>Loading more posts...</p>}>
                 {(filteredPosts || []).length > 0

@@ -1,0 +1,41 @@
+.selectContainer {
+    position: relative;
+    width: 100%;
+}
+.select {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    width: 100%;
+    font-size: 14px;
+    color: #333;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+.label {
+    bottom: 10px;
+    left: 0;
+    color: grey;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+.select {
+    appearance: none; 
+    -webkit-appearance: none; 
+    -moz-appearance: none;
+}
+
+.select:focus {
+    border-color: #2f33a1;
+    box-shadow: 0 0 5px rgba(47, 51, 161, 0.4);
+}
+
+.label {
+    
+    color: grey;
+    font-size: 16px;
+    margin-bottom: 5px;
+}

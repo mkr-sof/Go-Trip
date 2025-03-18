@@ -15,7 +15,7 @@ export const getUsers = () => {
 export const signupUser = async (userData) => {
     try {
     const {name, email, password} = userData;
-    const users = getUsers();
+    const users = await getUsers();
 
     const existingUser = users.find(user => user.email === email);
 
@@ -25,7 +25,7 @@ export const signupUser = async (userData) => {
     const newUser = { name, email, password };
     saveDataToLocalStorage("users", [...users, newUser]);
     await loginUser(newUser);
-    console.log(newUser)
+    // console.log(newUser)
     return { success: true };
 } catch (error) {
     return { success: false, message: "Something went wrong!" };
@@ -35,7 +35,7 @@ export const signupUser = async (userData) => {
 export const loginUser = async (userData) => {
 try{
     const {email, password} = userData;
-    const users = getUsers();
+    const users = await getUsers();
     const user = users.find(user => user.email === email);
     
     if(!user){
@@ -46,7 +46,7 @@ try{
         return {success: false, message: "Invalid email or password"};
     }
 
-    saveDataToLocalStorage("user", user);
+    saveDataToLocalStorage("users", user);
 
     return {success: true};
 }catch(error){
@@ -55,14 +55,22 @@ try{
 }
 
 export const resetPassword = async (email) => {
-    const users = getDataFromLocalStorage("users") || [];
+    try {
+    const users = await getUsers();
     const user = users.find(user => user.email === email);
     if(!user){
         return {success: false, message: "User not found."};
     }
     return {success: true, message: "Password reset instructions have been sent to your email."};
+} catch (error) {
+    return { success: false, message: "Something went wrong!" };
+}
 }
 
 export const logoutUser = async () => {
-    removeDataFromLocalStorage("user");
+    try {
+        removeDataFromLocalStorage("users");
+    } catch (error) {
+        console.error("Error during logout", error);
+    }
 }

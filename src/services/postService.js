@@ -11,6 +11,7 @@ export const getAllPosts = async () => {
     return await getDataFromLocalStorage("allPosts") || [];
 }
 
+
 export const updatePost = async (postId, updatedData) => {
     let allPosts = await getDataFromLocalStorage("allPosts") || [];
     allPosts = allPosts.map(post => 

@@ -1,20 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Outlet, useLocation } from 'react-router-dom';
-// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-// import Login from "components/features/Auth/Login";
-// import Signup from "components/features/Auth/Signup";
-// import ForgotPassword from "components/features/Auth/ForgotPassword";
-// import Feed from "components/features/Feed/Feed";
-// import Profile from "components/features/Profile/Profile";
 import Header from "components/layouts/Header/Header";
 import Content from "components/layouts/Content/Content";
 import Sidebar from "components/layouts/Sidebar/Sidebar";
+import { getDataFromLocalStorage, createTestUsers, createTestPosts, clearLocalStorage } from "services/storageService";
 import styles from "./App.module.scss";
 
 function App() {
 const location = useLocation();
-const hideSidebarRoutes = ["/login", "/signup", "/forgot-password"];
+const hideSidebarRoutes = ["/login", "/signup", "/forgot-password", "/profile", "/profile/edit"];
 const isAuthRoute = hideSidebarRoutes.includes(location.pathname);
+
+useEffect(() => {
+  // clearLocalStorage();
+
+  const existingUsers = getDataFromLocalStorage("users");
+  if (!existingUsers || existingUsers.length === 0) {
+    createTestUsers();
+    console.log("Test users created!");
+  }
+
+  const existingPosts = getDataFromLocalStorage("allPosts");
+    if (!existingPosts || existingPosts.length === 0) {
+        createTestPosts();
+        console.log("Test posts created!");
+    }
+}, []);
 
   return (
     <div className={styles.container}>
@@ -28,15 +39,6 @@ const isAuthRoute = hideSidebarRoutes.includes(location.pathname);
       </div>
       </div>
     </div>
-  // <Router>
-      // <Routes>
-      //   <Route path="/" element={<Feed />} />
-      //   <Route path="/login" element={<Login />} />
-      //   <Route path="/signup" element={<Signup />} />
-      //   <Route path="/forgot-password" element={<ForgotPassword />} />
-      //   <Route path="/profile" element={<Profile />} />
-      // </Routes>
-  //  </Router> 
   );
 }
 

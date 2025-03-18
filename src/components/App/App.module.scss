@@ -27,13 +27,17 @@
 }
 
 .authContainer {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    background: #2f3031;
-    border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically (if needed) */
+    width: 100%;
+    // max-width: 400px;
+    // margin: 50px auto;
+    // padding: 20px;
+    // background: #2f3031;
+    // border-radius: 8px;
+    // box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    // text-align: center;
 
     display: flex;
     flex-direction: column;

@@ -1,28 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginUser } from "services/authService";
+import { loginUser, getCurrentUser } from "services/authService";
 import Error from "components/common/Error/Error";
 import InputField from "components/common/InputField/InputField";
 import Button from "components/common/Button/Button";
 import styles from "./Auth.module.scss";
 
 function Login({onClick}) {
-
+    const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
-    const navigate = useNavigate();
+    const [rememberMe, setRememberMe] = useState(false);
+
+    useEffect(() => {
+        const rememberedUser = getCurrentUser();
+        if (rememberedUser) {
+            setEmail(rememberedUser.email);
+            // setPassword(rememberedUser.password);
+            setRememberMe(true);
+        }
+    }, []);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setError("");
         try {
-            await loginUser({ email, password });
+            const response = await loginUser({ email, password, rememberMe });
+            if (response.success) {
             navigate("/profile");
+        } else {
+            setError(response.message);
+        }
         } catch (error) {
             setError(error.message);
         }
-    setEmail("");
-    setPassword("");
+        setEmail("");
+        setPassword("");
     }
 
     return (
@@ -46,11 +60,20 @@ function Login({onClick}) {
                     value={password}
                     onChange={(event) => setPassword(event.target.value)}
                 />
+                <div className={styles.rememberMeContainer}>
+                    <input
+                        type="checkbox"
+                        id="rememberMe"
+                        checked={rememberMe}
+                        onChange={(e) => setRememberMe(e.target.checked)}
+                    />
+                    <label htmlFor="rememberMe">Remember Me</label>
+                </div>
                 <Button 
-                onClick={onClick}
-                className={styles.authLink}
-                type="submit"
-                text="Login"
+                    onClick={onClick}
+                    className={styles.authLink}
+                    type="submit"
+                    text="Login"
                 />
             </form>
             <p>
@@ -59,7 +82,6 @@ function Login({onClick}) {
             </p>
         </div>
     );
-
 }
 
 export default Login;

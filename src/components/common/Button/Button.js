@@ -13,6 +13,7 @@ function Button({disabled, text, onClick, className, type = 'button'}) {
         type={type}
         className={btnClassName} 
         onClick={onClick}
+        disabled={disabled}
         >
             {text}
         </button>

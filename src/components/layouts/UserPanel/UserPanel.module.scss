@@ -30,6 +30,26 @@
     gap: 10px;
     width: 100%;
 }
+
+.usernameLink{
+    color: #fff;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+    &:hover {
+        color: #2f33a1;
+    }
+}
+
+.emailLink {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    &:hover {
+        color: #2f33a1;
+    }
+}
+
 .authLink {
     margin: 15px;
     
