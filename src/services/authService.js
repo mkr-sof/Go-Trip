@@ -1,12 +1,19 @@
 import { saveDataToLocalStorage, getDataFromLocalStorage, removeDataFromLocalStorage } from 'services/storageService';
 
 export const isUserLoggedIn = () => {
-    return getDataFromLocalStorage("user") !== null;
+    return getDataFromLocalStorage("profile") !== null;
 }
 
 export const getCurrentUser = () => {
-    return getDataFromLocalStorage("user");
-}
+    const user = getDataFromLocalStorage("profile"); 
+    if (user) {
+        return user;
+    }else{
+      const sessionUser = sessionStorage.getItem("profile");
+    return sessionUser ? JSON.parse(sessionUser) : null;  
+    }
+    
+};
 
 export const getUsers = () => {
     return getDataFromLocalStorage("users") || [];
@@ -34,7 +41,7 @@ export const signupUser = async (userData) => {
 
 export const loginUser = async (userData) => {
 try{
-    const {email, password} = userData;
+    const {email, password, rememberMe} = userData;
     const users = await getUsers();
     const user = users.find(user => user.email === email);
     
@@ -45,8 +52,11 @@ try{
     if(user.password !== password){
         return {success: false, message: "Invalid email or password"};
     }
-
-    saveDataToLocalStorage("users", user);
+    if(rememberMe){
+        saveDataToLocalStorage("profile", user);
+    }else{
+        sessionStorage.setItem("profile", JSON.stringify(user));
+    }
 
     return {success: true};
 }catch(error){
@@ -69,7 +79,8 @@ export const resetPassword = async (email) => {
 
 export const logoutUser = async () => {
     try {
-        removeDataFromLocalStorage("users");
+        removeDataFromLocalStorage("profile");
+        sessionStorage.removeItem("profile"); 
     } catch (error) {
         console.error("Error during logout", error);
     }

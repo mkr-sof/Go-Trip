@@ -3,7 +3,6 @@ import { getCurrentUser, logoutUser } from "services/authService";
 import { useNavigate } from "react-router-dom";
 import Button from "components/common/Button/Button";
 import Description from "components/common/Description/Description";
-import Profile from "components/features/Profile/Profile";
 import styles from "./UserPanel.module.scss";
 
 function UserPanel() {
@@ -40,7 +39,8 @@ function UserPanel() {
             <Description className={styles.userPanel}>
                 <span 
                     className={styles.usernameLink}
-                    onClick={() => navigate(`/profile/${user.id}`)} 
+                    onClick={() => navigate(user ? '/profile' : `/profile/${user.id}`)} 
+                    // onClick={() => navigate("/profile")}
                 >
                     Welcome, {user.name}!
                 </span>

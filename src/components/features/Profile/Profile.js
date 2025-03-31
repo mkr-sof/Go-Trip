@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation, useParams } from "react-router-dom";
-import { getCurrentUser, logoutUser } from "services/authService";
+import { useNavigate, useLocation, useParams, Link } from "react-router-dom";
+import { getCurrentUser } from "services/authService";
 import { saveDataToLocalStorage, getDataFromLocalStorage } from "services/storageService";
 import PostCard from "components/features/Feed/Posts/PostCard/PostCard";
 import InputField from "components/common/InputField/InputField";
@@ -14,6 +14,9 @@ function Profile() {
     const { userId } = useParams();
     const currentUser = getCurrentUser();
     const isEditing = location.pathname === "/profile/edit";
+
+    const users = getDataFromLocalStorage("users");
+
 
     const profileUser = userId 
         ? getDataFromLocalStorage("users")?.find(user => user.id === Number(userId)) 
@@ -30,14 +33,14 @@ function Profile() {
 
     useEffect(() => {
         if (profileUser && profileUser.id) {
-            const fetchUserPosts = async () => {
+                const fetchUserPosts = async () => {
                 const allPosts = await getDataFromLocalStorage("allPosts") || [];
                 const posts = allPosts.filter(post => post.authorId.toString() === profileUser.id.toString());
                 setUserPosts(posts);
             };
             fetchUserPosts();
         }
-    }, [profileUser]);
+    }, []);
 
     if (!profileUser) {
         return <p>Loading...</p>;
@@ -62,9 +65,12 @@ function Profile() {
         saveDataToLocalStorage("users", updatedUsers);
 
         if (!userId) {
-            saveDataToLocalStorage("user", updatedUser);
+            if (getDataFromLocalStorage("profile")) {
+                saveDataToLocalStorage("profile", updatedUser);
+            } else {
+                sessionStorage.setItem("profile", JSON.stringify(updatedUser));
+            }
         }
-
         navigate("/profile");
     };
 
@@ -128,7 +134,17 @@ function Profile() {
                     <h2>{profileUser.name}'s Profile</h2>
                     <Description>{profileUser.name}'s Posts</Description>
                     {userPosts.length > 0 ? (
-                        userPosts.map(post => <PostCard key={post.id} post={post} />)
+                        userPosts.map(post => (
+                            <Link 
+                            key={post.id} 
+                            to={`/post/${post.id}`}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                            }}
+                            >
+                                <PostCard post={post} />
+                            </Link>
+                        ))
                     ) : (
                         <p>No posts found</p>
                     )}

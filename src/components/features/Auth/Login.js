@@ -19,6 +19,8 @@ function Login({onClick}) {
             setEmail(rememberedUser.email);
             // setPassword(rememberedUser.password);
             setRememberMe(true);
+        }else{
+            setRememberMe(false);
         }
     }, []);
 
@@ -37,12 +39,12 @@ function Login({onClick}) {
         }
         setEmail("");
         setPassword("");
-    }
+    };
 
     return (
         <div className={styles.authContainer}>
             <h2>Login</h2>
-            {error && <Error>{error}</Error>}
+            {error && <Error message={error} >{error}</Error>}
             <form className={styles.formContainer} onSubmit={handleSubmit}>
                 <InputField
                     label="Email"

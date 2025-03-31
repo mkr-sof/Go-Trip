@@ -28,7 +28,6 @@ function Signup({onClick}) {
             const userData = { name, email, password };
             console.log("Submitting signup form...");
             const response = await signupUser(userData);
-            
             if(response.success){
                 // console.log("Signup successful, navigating to profile...");
                 navigate("/profile");

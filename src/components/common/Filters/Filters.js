@@ -1,29 +1,35 @@
 import React, { useState, useEffect } from "react";
 import { getDataFromLocalStorage } from "services/storageService";
+import { getFavorites } from "services/favoriteService";
 import styles from "./Filters.module.scss"
 
 function Filters({ onFilterChange }) {
     const [filter, setFilter] = useState("all");
     const [sortOrder, setSortOrder] = useState("newest");
 
-    useEffect(() => {
-        const storedPosts = getDataFromLocalStorage("allPosts") || [];
-        onFilterChange(filter, sortOrder, storedPosts);
-    }, [filter, sortOrder]);
+    const handleFilterChange = (newFilter) => {
+        setFilter(newFilter);
+        onFilterChange(newFilter, sortOrder);
+    };
+
+    const handleSortChange = (newSortOrder) => {
+        setSortOrder(newSortOrder);
+        onFilterChange(filter, newSortOrder);
+    };
 
     return (
         <div className={styles.filters}>
             <div>
                 <span
                     className={filter === "all" ? styles.active : ""}
-                    onClick={() => setFilter("all")}
+                    onClick={() => handleFilterChange("all")}
                 >
                     All
                 </span>
                 /
                 <span
                     className={filter === "favorites" ? styles.active : ""}
-                    onClick={() => setFilter("favorites")}
+                    onClick={() => handleFilterChange("favorites")}
                 >
                     Favorites
                 </span>
@@ -31,14 +37,14 @@ function Filters({ onFilterChange }) {
             <div>
                 <span
                     className={sortOrder === "oldest" ? styles.active : ""}
-                    onClick={() => setSortOrder("oldest")}
+                    onClick={() => handleSortChange("oldest")}
                 >
                     Oldest First
                 </span>
                 /
                 <span
                     className={sortOrder === "newest" ? styles.active : ""}
-                    onClick={() => setSortOrder("newest")}
+                    onClick={() => handleSortChange("newest")}
                 >
                     Newest First
                 </span>

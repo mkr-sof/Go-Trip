@@ -8,7 +8,7 @@ import styles from "./App.module.scss";
 
 function App() {
 const location = useLocation();
-const hideSidebarRoutes = ["/login", "/signup", "/forgot-password", "/profile", "/profile/edit"];
+const hideSidebarRoutes = ["/login", "/signup", "/forgot-password", "/profile/edit"];
 const isAuthRoute = hideSidebarRoutes.includes(location.pathname);
 
 useEffect(() => {

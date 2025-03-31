@@ -1,6 +1,7 @@
 import React, { useState, useEffect, lazy, Suspense } from "react";
 import Filters from "components/common/Filters/Filters";
-import { isUserLoggedIn } from "services/authService";
+import { getCurrentUser } from "services/authService";
+import { getFavorites } from "services/favoriteService";
 import { getDataFromLocalStorage } from "services/storageService";
 import CreatePost from "components/features/Feed/CreatePost/CreatePost";
 import Description from "components/common/Description/Description";
@@ -10,20 +11,12 @@ import styles from "./Feed.module.scss";
 const Posts = lazy(() => import("components/features/Feed/Posts/Posts"));
 
 function Feed() {
+
+    const currentUser = getCurrentUser();
     const [posts, setPosts] = useState([]);
     const [filteredPosts, setFilteredPosts] = useState([]);
     const [showScrollUp, setShowScrollUp] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [user, setUser] = useState(null);
-
-    useEffect(() => {
-        const loggedInStatus = isUserLoggedIn(); // or get from local storage or context
-        setIsLoggedIn(!!loggedInStatus);
-        setUser(loggedInStatus);
-    }, []); // Run once on mount
-
-
-
+ 
     useEffect(() => {
         const allPosts = getDataFromLocalStorage("allPosts") || [];
         setPosts(allPosts);
@@ -38,18 +31,19 @@ function Feed() {
     }, []);
 
 
-    const handleFilterChange = (filter, sortOrder, allPosts) => {
-        let filtered = allPosts;
+    const handleFilterChange = (filter, sortOrder) => {
+        let filtered = [...posts];
         if (filter === "favorites") {
-            filtered = allPosts.filter(post => post.isFavorite && post.authorId === user?.id);
+            const favoriteIds = getFavorites();
+            filtered = filtered.filter(post => favoriteIds.includes(post.id));
         }
-        const sorted = filtered.sort((a, b) => {
+      filtered.sort((a, b) => {
             return sortOrder === "newest"
                 ? new Date(b.created_at) - new Date(a.created_at)
                 : new Date(a.created_at) - new Date(b.created_at);
         });
-        setFilteredPosts(sorted);
-    }
+        setFilteredPosts(filtered);
+    };
 
     const handleNewPost = (updatedPosts) => {
         setPosts(updatedPosts);
@@ -58,7 +52,7 @@ function Feed() {
 
     return (
         <div className={styles.feedContainer}>
-            {isLoggedIn && <CreatePost onPostCreated={handleNewPost} />}
+            {currentUser && <CreatePost onPostCreated={handleNewPost} />}
            
             {posts.length > 0 && <Filters onFilterChange={handleFilterChange} />}
             <Suspense fallback={<p>Loading more posts...</p>}>
@@ -69,6 +63,7 @@ function Feed() {
             </Suspense>
             {showScrollUp && (
                 <Button
+                type="button"
                     className={styles.scrollUp}
                     onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                 >
