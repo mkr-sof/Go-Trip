@@ -53,4 +53,15 @@ const postsSlice = createSlice({
 });
 
 export const { setPosts, filterPosts, toggleFavorite } = postsSlice.actions;
+
+export const fetchPosts = () => async (dispatch) => {
+    try {
+        const response = await fetch("/posts");
+        const data = await response.json();
+        dispatch(setPosts(data));
+    } catch (error) {
+        console.error("Failed to fetch posts:", error);
+    }
+};
+
 export default postsSlice.reducer;

@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import postsReducer from "./modules/postsSlice";
 import authReducer from "./modules/authSlice";
+import asyncFunctionMiddleware from "./middlewares/asyncFunctionMiddleware";
 
 const store = configureStore({
     reducer: {
@@ -9,7 +10,8 @@ const store = configureStore({
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
-        serializableCheck: false,
-        }),
+            serializableCheck: false,
+        }).concat(asyncFunctionMiddleware),
 });
+
 export default store;
