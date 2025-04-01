@@ -12,7 +12,7 @@
     color: #fff;
     margin-bottom: 10px;
   }
-.postDescrition {
+  .postDescription {
     font-size: 16px;
     color: #fff;
     margin-bottom: 10px;
@@ -27,4 +27,15 @@
     object-fit: cover;
     border-radius: 8px;
     margin-bottom: 20px;
+}
+.postActions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+.favoriteButton {
+    background: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
 }
