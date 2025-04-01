@@ -9,8 +9,9 @@ function Posts() {
     const posts = useSelector((state) => state.posts.posts);
 
     useEffect(() => {
+         dispatch(fetchPosts()); 
     }, [dispatch]);
-        dispatch(fetchPosts()); 
+       
 
     return (
         <div className={styles.postsContainer}>

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getAllPosts } from "services/postService";
 import { getDataFromLocalStorage, saveDataToLocalStorage } from "services/storageService";
 
 const initialFavorites = getDataFromLocalStorage("favorites") || [];
@@ -27,7 +28,7 @@ const postsSlice = createSlice({
             console.log("Filter parameters:", { filter, sortOrder, userId }); // Debugging log
             let filtered = state.posts;
             if (filter === "favorites") {
-                filtered = state.posts.filter(post => post.isFavorite && post.authorId === userId);
+                filtered = state.posts.filter(post => state.favorites.includes(post.id));
             }
 
             state.filteredPosts = filtered.sort((a, b) => {
@@ -56,8 +57,8 @@ export const { setPosts, filterPosts, toggleFavorite } = postsSlice.actions;
 
 export const fetchPosts = () => async (dispatch) => {
     try {
-        const response = await fetch("/posts");
-        const data = await response.json();
+        const data = await getAllPosts();
+        console.log(5555555)
         dispatch(setPosts(data));
     } catch (error) {
         console.error("Failed to fetch posts:", error);

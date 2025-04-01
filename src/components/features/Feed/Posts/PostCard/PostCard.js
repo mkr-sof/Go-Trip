@@ -112,7 +112,7 @@
 // export default PostCard;
 
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleFavorite } from "store/modules/postsSlice";
 import styles from "./PostCard.module.scss";
@@ -127,6 +127,10 @@ function PostCard({ post, onAuthorClick }) {
         e.stopPropagation(); 
         dispatch(toggleFavorite(post.id));
     };
+
+    // useEffect(() => {
+    //     dispatch(toggleFavorite(favorites))
+    // }, [dispatch])
 
     return (
         <div className={styles.postCard}>

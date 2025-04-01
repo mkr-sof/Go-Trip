@@ -24,4 +24,5 @@ export const removePost = async (postId) => {
     let allPosts = await getDataFromLocalStorage("allPosts") || [];
     allPosts = allPosts.filter(post => post.id !== postId);
     saveDataToLocalStorage("allPosts", allPosts);
+    return allPosts;
 }

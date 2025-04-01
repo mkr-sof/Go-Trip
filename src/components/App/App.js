@@ -3,7 +3,9 @@ import { Outlet, useLocation } from 'react-router-dom';
 import Header from "components/layouts/Header/Header";
 import Content from "components/layouts/Content/Content";
 import Sidebar from "components/layouts/Sidebar/Sidebar";
-import { getDataFromLocalStorage, createTestUsers, createTestPosts, clearLocalStorage } from "services/storageService";
+import { createTestUsers, createTestPosts, clearLocalStorage } from "services/storageService";
+import { getAllPosts } from "services/postService";
+import { getUsers } from "services/userService";
 import styles from "./App.module.scss";
 
 function App() {
@@ -13,18 +15,21 @@ const isAuthRoute = hideSidebarRoutes.includes(location.pathname);
 
 useEffect(() => {
   // clearLocalStorage();
-
-  const existingUsers = getDataFromLocalStorage("users");
+  const initializeData = async () => {
+  const existingUsers = await getUsers();
   if (!existingUsers || existingUsers.length === 0) {
     createTestUsers();
     console.log("Test users created!");
   }
 
-  const existingPosts = getDataFromLocalStorage("allPosts");
+  const existingPosts = await getAllPosts();
+  console.log("Existing posts:", existingPosts);
     if (!existingPosts || existingPosts.length === 0) {
         createTestPosts();
         console.log("Test posts created!");
     }
+  };
+  initializeData();
 }, []);
 
   return (

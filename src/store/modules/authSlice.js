@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getCurrentUser } from "services/authService";
-import { getDataFromLocalStorage, saveDataToLocalStorage } from "services/storageService";
+import { getCurrentUser, getUsers } from "services/userService";
+import { getDataFromLocalStorage, saveDataToLocalStorage, removeDataFromLocalStorage } from "services/storageService";
 
 const initialUsers = getDataFromLocalStorage("users") || [];
 
 const initialState = {
-    user: getCurrentUser() || null,
+    user: getDataFromLocalStorage("profile") || null,
     users: initialUsers,
 };
 
@@ -16,25 +16,22 @@ const authSlice = createSlice({
         setProfile: (state, action) => {
             console.log("setProfile action payload:", action.payload); // Debugging log
             state.user = action.payload;
-            const existingUsers = state.users.map(user =>
-                user.id === action.payload.id ? action.payload : user
-            );
-            state.users = existingUsers.some(user => user.id === action.payload.id)
-                ? existingUsers
-                : [...existingUsers, action.payload];
+            state.users = state.users.filter(user => user.id !== action.payload.id);
+            state.users.push(action.payload);
 
-            console.log("Updated users list:", state.users); // Debugging log
             saveDataToLocalStorage("users", state.users);
             saveDataToLocalStorage("profile", state.user);
         },
         logout: (state) => {
             state.user = null;
-            saveDataToLocalStorage("profile", null);
+            state.users = getDataFromLocalStorage("users") || [];
+            removeDataFromLocalStorage("profile");
+            sessionStorage.removeItem("profile");
         },
-        setUsers: (state, action) => {
-            state.users = action.payload;
-            saveDataToLocalStorage("users", state.users);
-        },
+        // setUsers: (state, action) => {
+        //     state.users = action.payload;
+        //     saveDataToLocalStorage("users", state.users);
+        // },
     },
 });
 

@@ -1,24 +1,5 @@
-import { saveDataToLocalStorage, getDataFromLocalStorage, removeDataFromLocalStorage } from 'services/storageService';
-
-export const isUserLoggedIn = () => {
-    return getDataFromLocalStorage("profile") !== null;
-}
-
-export const getCurrentUser = () => {
-    const user = getDataFromLocalStorage("profile"); 
-    if (user) {
-        return user;
-    }else{
-      const sessionUser = sessionStorage.getItem("profile");
-    return sessionUser ? JSON.parse(sessionUser) : null;  
-    }
-    
-};
-
-export const getUsers = () => {
-    return getDataFromLocalStorage("users") || [];
-}
-
+import { saveDataToLocalStorage, removeDataFromLocalStorage } from 'services/storageService';
+import { getCurrentUser, getUsers } from "services/userService"
 export const signupUser = async (userData) => {
     try {
     const {name, email, password} = userData;
@@ -29,7 +10,7 @@ export const signupUser = async (userData) => {
     if(existingUser){
         return {success: false, message: "User alredy exists!"};
     }
-    const newUser = { name, email, password };
+    const newUser = { id: Date.now(), name, email, password };
     saveDataToLocalStorage("users", [...users, newUser]);
     await loginUser(newUser);
     // console.log(newUser)

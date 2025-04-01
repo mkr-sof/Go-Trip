@@ -1,0 +1,41 @@
+
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; 
+    align-items: center;
+    width: 100%;
+}
+.profileContainer h2 {
+    color: #fff;
+}
+
+
+.authLink {
+  margin: 15px;
+  
+  &:hover {
+      background: #2f33a1;
+  }
+}
+
+.authInput {
+    color: grey;
+    background: transparent;
+    // margin-bottom: 20px;
+    padding: 10px;
+}
+
+.authOptions {
+    display: flex;
+    flex-direction:row;
+    gap: 10px;
+    width: 100%;
+}
+.authLink {
+    margin: 15px;
+    
+    &:hover {
+        background: #2f33a1;
+    }
+}

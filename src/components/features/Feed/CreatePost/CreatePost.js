@@ -3,8 +3,7 @@ import InputField from "components/common/InputField/InputField";
 import Button from "components/common/Button/Button";
 import SelectField from "components/common/SelectField/SelectField";
 import FileUpload from "components/common/FileUpload/FileUpload";
-import { getDataFromLocalStorage } from "services/storageService";
-import { getCurrentUser } from "services/authService";
+import { getCurrentUser } from "services/userService";
 import { createPost } from "services/postService";
 import styles from "./CreatePost.module.scss";
 

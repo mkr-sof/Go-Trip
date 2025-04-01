@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginUser, getCurrentUser } from "services/authService";
+import { getCurrentUser } from "services/userService";
+import { loginUser } from "services/authService";
 import Error from "components/common/Error/Error";
 import InputField from "components/common/InputField/InputField";
 import Button from "components/common/Button/Button";
@@ -14,14 +15,17 @@ function Login({onClick}) {
     const [rememberMe, setRememberMe] = useState(false);
 
     useEffect(() => {
-        const rememberedUser = getCurrentUser();
-        if (rememberedUser) {
-            setEmail(rememberedUser.email);
-            // setPassword(rememberedUser.password);
-            setRememberMe(true);
-        }else{
-            setRememberMe(false);
-        }
+        const fetchUser = async () => {
+            const rememberedUser = await getCurrentUser();
+            if (rememberedUser) {
+                setEmail(rememberedUser.email);
+                setRememberMe(true);
+            } else {
+                setRememberMe(false);
+            }
+        };
+    
+        fetchUser();
     }, []);
 
     const handleSubmit = async (event) => {
