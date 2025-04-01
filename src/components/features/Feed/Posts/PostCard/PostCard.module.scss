@@ -22,7 +22,18 @@
     border-radius: 6px;
     margin-top: 10px;
 }
-
+.postDetails{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+    p {
+    font-size: 22px;
+    }
+} 
+.authorName:hover {
+    color: #007bff;
+}
 .postActions {
     display: flex;
     justify-content: space-between;

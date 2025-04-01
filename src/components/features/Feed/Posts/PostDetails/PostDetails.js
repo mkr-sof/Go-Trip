@@ -33,6 +33,9 @@ function PostDetails() {
 
     return (
         <div className={styles.postContainer}>
+
+            <button className={styles.backButton} onClick={() => navigate(-1)}>⬅ Go Back</button>
+            
             <h2 className={styles.postTitle}>{post.title}</h2>
             <p className={styles.postDescription}>{post.description}</p>
             <span className={styles.postAuthor} onClick={handleAuthorClick}>
