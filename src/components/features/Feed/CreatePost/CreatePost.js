@@ -52,6 +52,10 @@ function CreatePost({onPostCreated, onClick}){
 
     };
 
+    const handleRemoveImage = () => {
+        setImage(""); 
+    };
+
     return (
         <div className={styles.createPostContainer}>
             <h3>Create a New Post</h3>
@@ -73,6 +77,7 @@ function CreatePost({onPostCreated, onClick}){
                 <SelectField
                     label="Category"
                     value={category}
+                    onRemoveImage={handleRemoveImage}
                     onChange={(event) => setCategory(event.target.value)}
                     options={["Adventure", "Nature", "City Trips", "Beach"]}
                 />

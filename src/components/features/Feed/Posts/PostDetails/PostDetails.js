@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleFavorite } from "store/modules/postsSlice";
 import NotFound from "components/features/NotFound/NotFound";
+import CreatePost from "components/features/Feed/CreatePost/CreatePost";
+import Popup from "components/common/Popup/Popup";
 import styles from "./PostDetails.module.scss";
 
 function PostDetails() {
@@ -10,6 +12,8 @@ function PostDetails() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const user = useSelector((state) => state.auth.user);
+
+    const [isEditing, setIsEditing] = useState(false);
 
     const post = useSelector((state) =>
         state.posts.posts.find((p) => p.id.toString() === postId)
@@ -29,6 +33,14 @@ function PostDetails() {
 
     const handleAuthorClick = () => {
         navigate(`/profile/${post.authorId}`);
+    };
+
+    const handleEdit = () => {
+        setIsEditing(true);
+    };
+
+    const handleClosePopup = () => {
+        setIsEditing(false);
     };
 
     return (
@@ -55,7 +67,25 @@ function PostDetails() {
                         {isFavorited ? "❤️ Unfavorite" : "🤍 Favorite"}
                     </button>
                 )}
+                {user && user.id === post.authorId && (
+                    <button className={styles.editButton} onClick={handleEdit}>✏️ Edit</button>
+                )}
             </div>
+
+            {isEditing && (
+                <Popup onClose={handleClosePopup}>
+                    <CreatePost
+                        onPostCreated={handleClosePopup}
+                        onClick={handleClosePopup}
+                        initialTitle={post.title}
+                        initialDescription={post.description}
+                        initialCategory={post.category}
+                        initialImage={post.image}
+                    />
+                </Popup>
+            )}
+
+
         </div>
     );
 }
