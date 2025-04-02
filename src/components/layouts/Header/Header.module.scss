@@ -12,6 +12,7 @@
 }
 
 .navbar {
+
     display: flex;
     justify-content: center;
     flex-grow: 1;
@@ -31,7 +32,7 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: #000;
+    background: #db5f5f;
     overflow: hidden;
     cursor: pointer;
 }

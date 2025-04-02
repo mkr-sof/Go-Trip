@@ -39,7 +39,7 @@ function configureRouter() {
                     element: <Profile />
                 },
                 {
-                    path: "profile/:authorId",
+                    path: "profile/:userId",
                     element: <Profile />
                 },
                 {

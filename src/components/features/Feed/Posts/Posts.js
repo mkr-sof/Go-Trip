@@ -7,18 +7,19 @@ import styles from "./Posts.module.scss";
 function Posts() {
     const dispatch = useDispatch();
     const posts = useSelector((state) => state.posts.posts);
+    const filteredPosts = useSelector((state) => state.posts.filteredPosts);
+    const filter = useSelector((state) => state.posts.filter);
 
     useEffect(() => {
          dispatch(fetchPosts()); 
     }, [dispatch]);
        
-
     return (
         <div className={styles.postsContainer}>
-            {posts.length === 0 ? (
+            {!(filter === 'all' ? posts : filteredPosts).length ? (
                 <p>No posts available</p>
             ) : (
-                posts.map((post) => (
+                (filter === 'all' ? posts : filteredPosts).map((post) => (
                     <PostCard key={post.id} post={post} />
                 ))
             )}

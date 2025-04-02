@@ -7,12 +7,19 @@ import { getCurrentUser } from "services/userService";
 import { createPost } from "services/postService";
 import styles from "./CreatePost.module.scss";
 
-function CreatePost({onPostCreated, onClick}){
-   
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [image, setImage] = useState("");
-    const [category, setCategory] = useState("");
+function CreatePost({
+    onPostCreated, 
+    onClick, 
+    initialTitle,
+    initialDescription,
+    initialCategory,
+    initialImage,
+    isEditing = false,
+}){
+    const [title, setTitle] = useState(initialTitle ||"");
+    const [description, setDescription] = useState(initialDescription || "");
+    const [image, setImage] = useState(initialImage ||"");
+    const [category, setCategory] = useState(initialCategory || "");
 
     const handleImageUpload = (event) => {
         const file = event.target.files[0];

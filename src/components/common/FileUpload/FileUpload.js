@@ -14,9 +14,7 @@ function FileUpload({ onChange, image, onRemoveImage }) {
              {image && (
                 <div className={styles.imagePreviewContainer}>
                     <img src={image} alt="Preview" className={styles.imagePreview} />
-                    <button className={styles.closeButton} onClick={onRemoveImage}>
-                        <CloseIcon className={styles.closeIcon} />
-                    </button>
+                    <CloseIcon className={styles.closeIcon} onClick={onRemoveImage}/>
                 </div>
             )}
         </div>

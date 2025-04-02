@@ -31,7 +31,7 @@ function Navbar() {
     return (
         <nav className={styles.navbar}>
             <Link to="/" className={styles.navItem}>Home</Link>
-            <Link to="/profile" className={styles.navItem}>Profile</Link>
+            {/* <Link to="/profile" className={styles.navItem}>Profile</Link> */}
             <div className={styles.dropdown} ref={dropdownRef}>
                 <button 
                     onClick={toggleDropdown} 

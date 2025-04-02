@@ -17,10 +17,6 @@ function Profile() {
     const posts = useSelector((state) => state.posts.posts);
     const allUsers = useSelector((state) => state.auth.users);
 
-    console.log('Posts:', posts);
-    console.log('profile:', profile);
-    console.log('allUsers:', allUsers);
-
     const isEditing = location.pathname === "/profile/edit";
 
     const profileUser = userId
@@ -31,7 +27,7 @@ function Profile() {
     if (!profileUser) {
         return <p>Loading...</p>;
     }
-    const filteredPosts = posts.filter(post => post.authorId.toString() === profileUser.id.toString());
+    const filteredPosts = posts.filter(post => +post.authorId === profileUser.id);
 
 
     return (

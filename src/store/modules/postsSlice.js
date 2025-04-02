@@ -45,11 +45,15 @@ const postsSlice = createSlice({
             } else {
                 state.favorites.push(postId);
             }
-            saveDataToLocalStorage("favorites", state.favorites); 
+            saveDataToLocalStorage("favorites", state.favorites);
+            
+            if (state.filter === "favorites") {
+                state.filteredPosts = state.posts.filter(post => state.favorites.includes(post.id));
+            }
         },
-        setScrollUp: (state, action) => {
-            state.showScrollUp = action.payload;
-        },
+        // setScrollUp: (state, action) => {
+        //     state.showScrollUp = action.payload;
+        // },
     },
 });
 
@@ -58,7 +62,6 @@ export const { setPosts, filterPosts, toggleFavorite } = postsSlice.actions;
 export const fetchPosts = () => async (dispatch) => {
     try {
         const data = await getAllPosts();
-        console.log(5555555)
         dispatch(setPosts(data));
     } catch (error) {
         console.error("Failed to fetch posts:", error);

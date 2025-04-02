@@ -81,6 +81,7 @@ function PostDetails() {
                         initialDescription={post.description}
                         initialCategory={post.category}
                         initialImage={post.image}
+                        isEditing={true}
                     />
                 </Popup>
             )}

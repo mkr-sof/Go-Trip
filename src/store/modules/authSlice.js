@@ -14,13 +14,16 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         setProfile: (state, action) => {
-            console.log("setProfile action payload:", action.payload); // Debugging log
-            state.user = action.payload;
+            const user = action.payload ? action.payload : getCurrentUser();
+            state.user = user;
+
+            if(action.payload){
             state.users = state.users.filter(user => user.id !== action.payload.id);
             state.users.push(action.payload);
 
             saveDataToLocalStorage("users", state.users);
             saveDataToLocalStorage("profile", state.user);
+            }
         },
         logout: (state) => {
             state.user = null;

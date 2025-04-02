@@ -1,16 +1,31 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import Logo from "components/common/Logo/Logo";
 import Navbar from "components/layouts/Navbar/Navbar";
 import Avatar from "components/common/Avatar/Avatar";
 import SearchInput from "components/common/SearchInput/SearchInput"
+import { loginUser } from "services/authService";
+import { getDataFromLocalStorage } from "services/storageService";
+import { setProfile } from "store/modules/authSlice";
+import { setPosts } from "store/modules/postsSlice";
 import classNames from "classnames";
-import { loginUser } from "services/authService"
 import styles from "./Header.module.scss";
 
+
 function Header() {
+    const {pathname} = useLocation();
     const navigate = useNavigate(); 
+    const dispatch = useDispatch();
     const [searchQuery, setSearchQuery] = useState("");
+
+    useEffect(() => {
+        if (pathname !== '/login' && pathname !== '/signup') {
+            dispatch(setProfile());
+            const allPosts = getDataFromLocalStorage("allPosts") || [];
+            dispatch(setPosts(allPosts));
+        }
+    }, [pathname]);
 
     const handleSearchChange = (event) => {
         setSearchQuery(event.target.value);
@@ -42,7 +57,9 @@ function Header() {
                     className={styles.searchInput} 
                 />
                 {loginUser && (
-                    <div className={styles.avatarContainer}>
+                    <div className={styles.avatarContainer}
+                    onClick={() => navigate("/profile")}
+                    >
                         <Avatar className={styles.avatar} />
                     </div>
                 )}
