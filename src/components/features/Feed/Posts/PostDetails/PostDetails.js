@@ -68,7 +68,7 @@ function PostDetails() {
                     </button>
                 )}
                 {user && user.id === post.authorId && (
-                    <button className={styles.editButton} onClick={handleEdit}>✏️ Edit</button>
+                    <button className={styles.editButton} onClick={handleEdit}>Edit</button>
                 )}
             </div>
 
@@ -81,6 +81,8 @@ function PostDetails() {
                         initialDescription={post.description}
                         initialCategory={post.category}
                         initialImage={post.image}
+                        initialPostId={post.id}
+                        initialCreatedAt={post.created_at}
                         isEditing={true}
                     />
                 </Popup>

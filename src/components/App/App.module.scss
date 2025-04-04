@@ -9,6 +9,7 @@
     flex-grow: 1;
     gap: 20px;
     padding: 10px;
+    justify-content: center; 
 }
 
 .sidebar {
@@ -24,6 +25,8 @@
     flex-grow: 1;
     display: flex;
     flex-direction: column;
+    align-items: center;
+
 }
 
 .authContainer {

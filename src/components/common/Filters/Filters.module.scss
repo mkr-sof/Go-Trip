@@ -3,22 +3,34 @@
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
-    padding: 10px;
+    padding: 12px 16px;
     border-radius: 4px;
-    border: 1px solid #ccc;
-    background-color: #fff;
+    border: none ;
+    background-color: #202020;
     width: 100%;
     font-size: 14px;
-    color: #333;
+    color: #ccc;
     outline: none;
+
+    border: 1px solid #2c2c2c; 
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
     transition: border-color 0.3s ease;
   }
-  
+  .filters:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
+    border-color: #333;
+  }
   .filters button {
     padding: 8px 16px;
     border: none;
     cursor: pointer;
-    background-color: #f0f0f0;
+    
+  }
+
+  .filters div span {
+    margin: 0 8px;
+    cursor: pointer;
+    transition: color 0.2s;
   }
   
   .filters .active {

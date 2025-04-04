@@ -2,8 +2,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setProfile } from "store/modules/authSlice";
-import { saveDataToLocalStorage } from "services/storageService";
 import PostCard from "components/features/Feed/Posts/PostCard/PostCard";
 import EditProfile from "components/features/Profile/EditProfile/EditProfile";
 import Description from "components/common/Description/Description";

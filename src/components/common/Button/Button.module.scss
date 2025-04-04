@@ -1,9 +1,12 @@
 button {
     width: 90px;
-    padding: 10px;
+    border-radius: 7px;
     background: #3137C9;
     color: white;
+    padding: 10px;
     border: none;
-    border-radius: 7px;
     cursor: pointer;
+    &:hover {
+      background: #2f33a1;
+  }
 }

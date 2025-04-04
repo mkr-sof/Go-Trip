@@ -46,6 +46,7 @@ function Navbar() {
                                 key={index} 
                                 to={`/category/${category.toLowerCase().replace(/\s+/g, '-')}`} 
                                 className={styles.dropdownItem}
+                                onClick={() => setIsDropdownOpen(false)}
                             >
                                 {category}
                             </Link>

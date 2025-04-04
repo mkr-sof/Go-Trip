@@ -1,14 +1,14 @@
 
 .feedContainer {
-    
     display: flex;
     flex-direction: column;
     background: #2f3031;
     border-radius: 8px;
-    padding: 40px;
+    padding: 20px;
     width: 80%;
+    margin: 0 auto;
   }
- 
+
   .postList {
     display: flex;
     flex-direction: column;
@@ -24,10 +24,19 @@
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background: #2f33a1;
-    color: white;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
+    
   }
   
+  .createHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #3a3b3c;
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+  }
+

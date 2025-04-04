@@ -7,6 +7,7 @@ import Profile from "components/features/Profile/Profile";
 import Feed from "components/features/Feed/Feed";
 import NotFound from "components/features/NotFound/NotFound";
 import PostDetails from "components/features/Feed/Posts/PostDetails/PostDetails";
+import CategoryPage from "components/features/Feed/Posts/CategoryPage/CategoryPage";
 
 function configureRouter() {
     return createBrowserRouter([
@@ -45,6 +46,10 @@ function configureRouter() {
                 {
                     path: "post/:postId",  
                     element: <PostDetails />
+                },
+                {
+                    path: "category/:categoryName",  
+                    element: <CategoryPage />
                 },
                 {
                     path: "*",

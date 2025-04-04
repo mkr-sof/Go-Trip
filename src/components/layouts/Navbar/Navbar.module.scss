@@ -20,6 +20,11 @@
     position: relative;
     button {
     color: #c5c2c2;
+    font-weight: bold;
+    font-size: 14px;
+    &:hover {
+        background: none;
+    }
     }
 }
 
