@@ -1,14 +1,15 @@
-goTripExpo
-├── .expo
-├── app
-    ├──index.js
-├── components
-│   ├── App
-│   │   ├── App.js
-│   │   └── App.module.scss
-|   ├── common
-|   ├──features
-│   └── layouts
-
-├── app.json
-└── index.js          
+goTrip/
+└── src/
+    ├── assets/
+    ├── components/
+    │   ├── App/
+    │   ├── common/
+    │   ├── features/
+    │   │   ├── Auth/
+    │   │   ├── Feed/
+    │   │   ├── Profile/
+    │   │   └── NotFound/
+    ├── layouts/
+    ├── hooks/
+    ├── routes/
+    └── store/
