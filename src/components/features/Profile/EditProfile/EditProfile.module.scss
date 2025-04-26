@@ -1,10 +1,21 @@
 
 .formContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 15px; 
-    align-items: center;
-    width: 100%;
+        // max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #2f3031;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+
+    display: flex; 
+    flex-direction: column; 
+    gap: 20px; 
+    // display: flex;
+    // flex-direction: column;
+    // gap: 15px; 
+    // align-items: center;
+    // width: 100%;
 }
 .profileContainer h2 {
     color: #fff;

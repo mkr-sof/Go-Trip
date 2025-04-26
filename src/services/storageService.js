@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from "uuid";
 import adventure1 from "../assets/images/adventure/adventure1.jpg";
 import adventure2 from "../assets/images/adventure/adventure2.jpg";
 import adventure3 from "../assets/images/adventure/adventure3.jpg";
@@ -18,6 +19,8 @@ import beach4 from "../assets/images/beach/beach4.jpg";
 export const saveDataToLocalStorage = (key, data) => {
     try {
         localStorage.setItem(key, JSON.stringify(data));
+        console.log(`${key} successfully saved in localStorage`, data);  // Добавим логирование
+
     } catch (error) {
         console.error(`Error saving ${key} to localStorage:`, error);
     }
@@ -56,21 +59,24 @@ export const createTestUsers = () => {
             name: "Alice Johnson",
             email: "alice@example.com",
             password: "test123",
-            avatar: "https://randomuser.me/api/portraits/women/1.jpg"
+            avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+            posts: []
         },
         {
             id: 2,
             name: "Bob Smith",
             email: "bob@example.com",
             password: "test123",
-            avatar: "https://randomuser.me/api/portraits/men/2.jpg"
+            avatar: "https://randomuser.me/api/portraits/men/2.jpg",
+            posts: []
         },
         {
             id: 3,
             name: "Charlie Brown",
             email: "charlie@example.com",
             password: "test123",
-            avatar: "https://randomuser.me/api/portraits/men/3.jpg"
+            avatar: "https://randomuser.me/api/portraits/men/3.jpg",
+            posts: []
         }
     ];
 
@@ -121,25 +127,28 @@ export const createTestPosts = () => {
         beach4
     ]
 };
-    const testPosts = users.flatMap(user =>
-        Array.from({ length: 4 }, (_, index) => {
-            const category = categories[index];
-            const randomImage = categoryImages[category][Math.floor(Math.random() * 4)];
-           return  {
-            id: Date.now() + Math.random(), 
+const testPosts = users.flatMap(user =>
+    categories.map((category, index) => {
+        const randomImage = categoryImages[category][Math.floor(Math.random() * 4)];
+        const newPost = {
+            id: uuidv4(),
             authorId: user.id,
             authorName: user.name,
             title: `Test Post ${index + 1} by ${user.name}`,
             description: sampleDescriptions[index],
-            category: categories[index],
-            image: randomImage, 
+            category: category,  
+            image: randomImage,
             created_at: new Date().toISOString(),
             updated_at: new Date().toISOString(),
             isFavorite: false,
         };
-        })
-    );
+        user.posts = user.posts || []; 
+        user.posts.push(newPost);
 
+        return newPost;
+    })
+);
+saveDataToLocalStorage("users", users);
     saveDataToLocalStorage("allPosts", testPosts);
     console.log("Test posts created!");
 };

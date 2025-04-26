@@ -12,7 +12,7 @@ export const signupUser = async (userData) => {
     }
     const newUser = { id: Date.now(), name, email, password };
     saveDataToLocalStorage("users", [...users, newUser]);
-    await loginUser(newUser);
+    await profile(newUser);
     // console.log(newUser)
     return { success: true };
 } catch (error) {
@@ -20,7 +20,7 @@ export const signupUser = async (userData) => {
 }
 }
 
-export const loginUser = async (userData) => {
+export const profile = async (userData) => {
 try{
     const {email, password, rememberMe} = userData;
     const users = await getUsers();

@@ -9,15 +9,21 @@ import styles from "./CategoryPage.module.scss";
 function CategoryPage() {
   const { categoryName } = useParams();
   const dispatch = useDispatch();
-  const posts = useSelector((state) => state.posts.filteredPosts);
-  const { filter, sortOrder, userId } = useSelector((state) => state.posts);
+  const posts = useSelector((state) => state.posts.posts);
+
+  const { filter, sortOrder, filterUserId: userId } = useSelector((state) => state.posts);
   useEffect(() => {
-    dispatch(filterPosts({ filter, sortOrder, userId, category: categoryName }));
-  }, [categoryName, dispatch, filter, sortOrder, userId]);
+    dispatch(filterPosts({ 
+      filter: "category",
+      sortOrder, 
+      userId, 
+      category: categoryName 
+    }));
+  }, [categoryName, dispatch, sortOrder, userId, posts]);
 
   return (
     <div className={styles.categortyPage}>
-      <h2>Category: {categoryName.replace(/-/g, " ")}</h2>
+      <h2>Category: {categoryName.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())}</h2>
       {posts.length > 0 ? (
         <Posts posts={posts} />
       ) : (

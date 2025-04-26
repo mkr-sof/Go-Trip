@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getCurrentUser, getUsers } from "services/userService";
+import { getCurrentUser } from "services/userService";
 import { getDataFromLocalStorage, saveDataToLocalStorage, removeDataFromLocalStorage } from "services/storageService";
 
 const initialUsers = getDataFromLocalStorage("users") || [];

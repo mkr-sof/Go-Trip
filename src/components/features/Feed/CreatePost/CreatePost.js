@@ -11,7 +11,7 @@ import { updatePost } from "store/modules/postsSlice";
 import styles from "./CreatePost.module.scss";
 
 function CreatePost({
-    onPostCreated,  
+    onPostCreated,
     initialTitle,
     initialDescription,
     initialCategory,
@@ -19,10 +19,10 @@ function CreatePost({
     initialPostId,
     initialCreatedAt,
     isEditing = false,
-}){
-    const [title, setTitle] = useState(initialTitle ||"");
+}) {
+    const [title, setTitle] = useState(initialTitle || "");
     const [description, setDescription] = useState(initialDescription || "");
-    const [image, setImage] = useState(initialImage ||"");
+    const [image, setImage] = useState(initialImage || "");
     const [category, setCategory] = useState(initialCategory || "");
 
     const dispatch = useDispatch();
@@ -40,13 +40,14 @@ function CreatePost({
 
     const handleCreatePost = async (event) => {
         event.preventDefault();
-        if(!title && !description && !category) return;
+        if (!title && !description && !category) return;
 
         const user = getCurrentUser();
-        
+
         const updatedPost = {
             id: isEditing ? initialPostId : uuidv4(),
-            authorName: user?.name || "Guest", 
+            authorId: user?.id || "guest",
+            authorName: user?.name || "Guest",
             title,
             description,
             category,
@@ -57,22 +58,22 @@ function CreatePost({
         }
         let result;
         if (isEditing) {
-          result = await dispatch(updatePost(updatedPost));
+            result = await dispatch(updatePost(updatedPost));
         } else {
-          result = await dispatch(createPost(updatedPost));
+            result = await dispatch(createPost(updatedPost));
         }
         onPostCreated(result.payload);
-        
 
-    setTitle("");
-    setDescription("");
-    setImage("");
-    setCategory("");
+
+        setTitle("");
+        setDescription("");
+        setImage("");
+        setCategory("");
 
     };
 
     const handleRemoveImage = () => {
-        setImage(""); 
+        setImage("");
     };
 
     return (
@@ -100,16 +101,16 @@ function CreatePost({
                     onChange={(event) => setCategory(event.target.value)}
                     options={["Adventure", "Nature", "City Trips", "Beach"]}
                 />
-                <FileUpload 
-                onRemoveImage={handleRemoveImage} 
-                onChange={handleImageUpload} 
-                image={image} 
+                <FileUpload
+                    onRemoveImage={handleRemoveImage}
+                    onChange={handleImageUpload}
+                    image={image}
                 />
-                <Button 
-                // onClick={onClick} 
-                type="submit" 
-                text={isEditing ? "Save" : "Create"}  
-                className={styles.authLink}           
+                <Button
+                    // onClick={onClick} 
+                    type="submit"
+                    text={isEditing ? "Save" : "Create"}
+                    className={styles.authLink}
                 />
             </form>
         </div>

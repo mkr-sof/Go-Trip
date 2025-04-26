@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleFavorite } from "store/modules/postsSlice";
+import { filterPosts } from "store/modules/postsSlice";
 import NotFound from "components/features/NotFound/NotFound";
 import CreatePost from "components/features/Feed/CreatePost/CreatePost";
 import Popup from "components/common/Popup/Popup";
@@ -32,6 +33,7 @@ function PostDetails() {
     };
 
     const handleAuthorClick = () => {
+        dispatch(filterPosts({ filter: "author", userId: post.authorId, sortOrder: "newest" }));
         navigate(`/profile/${post.authorId}`);
     };
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCurrentUser } from "services/userService";
-import { loginUser } from "services/authService";
+import { profile } from "services/authService";
 import Error from "components/common/Error/Error";
 import InputField from "components/common/InputField/InputField";
 import Button from "components/common/Button/Button";
@@ -32,7 +32,7 @@ function Login({onClick}) {
         event.preventDefault();
         setError("");
         try {
-            const response = await loginUser({ email, password, rememberMe });
+            const response = await profile({ email, password, rememberMe });
             if (response.success) {
             navigate("/profile");
         } else {

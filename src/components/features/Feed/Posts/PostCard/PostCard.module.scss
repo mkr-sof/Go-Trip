@@ -1,7 +1,7 @@
 .postCard {
-    background: white;
+    background: #2f3031;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
     padding: 16px;
     margin-bottom: 16px;
     transition: transform 0.2s ease-in-out;
@@ -9,6 +9,10 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+    h2, p {
+        color: #fff;
+    }
+    
 }
 
 .postCard:hover {
@@ -29,6 +33,11 @@
     gap: 22px;
     p {
     font-size: 22px;
+    color: #fff;
+    }
+    span {
+        font-size: 16px;
+        color: #aaa;
     }
 } 
 .authorName:hover {
