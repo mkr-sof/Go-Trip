@@ -113,14 +113,7 @@ const postsSlice = createSlice({
                 state.filteredPosts = state.posts.filter(post => state.favorites.includes(post.id));
             }
         },
-        // searchPosts: (state, action) => {
-        //     const query = action.payload?.toLowerCase();
-        //     state.filteredPosts = state.posts.filter((post) =>
-        //         post.title?.toLowerCase().includes(query) ||
-        //         post.description?.toLowerCase().includes(query)
-        //     );
-        //     state.filter = "search";
-        // },
+
         searchPosts: (state, action) => {
             const query = action.payload?.toLowerCase();
         

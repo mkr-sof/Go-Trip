@@ -16,13 +16,18 @@ const authSlice = createSlice({
         setProfile: (state, action) => {
             const user = action.payload ? action.payload : getCurrentUser();
             state.user = user;
+            const rememberMe = action.payload?.rememberMe;
 
+            if (rememberMe) {
+                saveDataToLocalStorage("profile", state.user);
+            } else {
+                sessionStorage.setItem("profile", JSON.stringify(state.user));
+            }
             if(action.payload){
             state.users = state.users.filter(user => user.id !== action.payload.id);
             state.users.push(action.payload);
 
             saveDataToLocalStorage("users", state.users);
-            saveDataToLocalStorage("profile", state.user);
             }
         },
         logout: (state) => {
@@ -31,12 +36,14 @@ const authSlice = createSlice({
             removeDataFromLocalStorage("profile");
             sessionStorage.removeItem("profile");
         },
-        // setUsers: (state, action) => {
-        //     state.users = action.payload;
-        //     saveDataToLocalStorage("users", state.users);
-        // },
+        setAvatar: (state, action) => {
+            if (state.user) {
+                state.user.avatar = action.payload;
+                saveDataToLocalStorage("profile", state.user);
+            }
+        },
     },
 });
 
-export const { setProfile, logout, setUsers } = authSlice.actions;
+export const { setProfile, logout, setAvatar } = authSlice.actions;
 export default authSlice.reducer;

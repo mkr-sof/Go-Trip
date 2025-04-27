@@ -5,9 +5,9 @@ import Logo from "components/common/Logo/Logo";
 import Navbar from "components/layouts/Navbar/Navbar";
 import Avatar from "components/common/Avatar/Avatar";
 import SearchInput from "components/common/SearchInput/SearchInput"
-import { profile } from "services/authService";
 import { getDataFromLocalStorage } from "services/storageService";
-import { setProfile } from "store/modules/authSlice";
+import { uploadAvatar } from "services/userService";
+import { setProfile, setAvatar } from "store/modules/authSlice";
 import { setPosts, filterPosts } from "store/modules/postsSlice";
 import { fetchPosts, searchPosts, resetFilter } from "store/modules/postsSlice";
 import classNames from "classnames";
@@ -18,7 +18,11 @@ function Header() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [searchQuery, setSearchQuery] = useState("");
+    // const [avatarPreview, setAvatarPreview] = useState(user?.avatar || "");
     const posts = useSelector((state) => state.posts.posts); 
+    const user = useSelector((state) => state.auth.user);
+console.log("avatar", user?.avatar);
+
 
     useEffect(() => {
         if (pathname !== '/login' && pathname !== '/signup') {
@@ -62,6 +66,13 @@ function Header() {
         }
     };
 
+    const handleAvatarChange = (event) => {
+      
+    };
+    const handleAvatarDelete = () => {
+       
+    };
+
     return (
         <div className={classNames(styles.headerContainer)}>
             <div onClick={() => navigate("/")} className={styles.logo} >
@@ -80,16 +91,16 @@ function Header() {
                     placeholder="Search post..."
                     className={styles.searchInput}
                 />
-                {/* {profile && profile?.avatar && ( */}
+                {user?.avatar && (
                     <div className={styles.avatarContainer}
                         onClick={() => navigate("/profile")}
                     >
                         <Avatar 
-                        src={profile.avatar}
+                        src={user?.avatar}
                         className={styles.avatar} 
                         />
                     </div>
-                {/* )} */}
+                )} 
             </div>
         </div>
     );

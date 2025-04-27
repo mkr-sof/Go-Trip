@@ -1,6 +1,9 @@
 import { saveDataToLocalStorage, removeDataFromLocalStorage } from 'services/storageService';
-import { getCurrentUser, getUsers } from "services/userService"
-export const signupUser = async (userData) => {
+import {  getUsers } from "services/userService";
+import { setProfile } from "store/modules/authSlice";
+
+
+export const signupUser = async (userData, dispatch) => {
     try {
     const {name, email, password} = userData;
     const users = await getUsers();
@@ -10,9 +13,16 @@ export const signupUser = async (userData) => {
     if(existingUser){
         return {success: false, message: "User alredy exists!"};
     }
-    const newUser = { id: Date.now(), name, email, password };
+    const newUser = { 
+        id: Date.now(), 
+        name, 
+        email, 
+        password, 
+        posts: [],
+        avatar: null,
+    };
     saveDataToLocalStorage("users", [...users, newUser]);
-    await profile(newUser);
+    await profile(newUser, dispatch);
     // console.log(newUser)
     return { success: true };
 } catch (error) {
@@ -20,7 +30,7 @@ export const signupUser = async (userData) => {
 }
 }
 
-export const profile = async (userData) => {
+export const profile = async (userData, dispatch) => {
 try{
     const {email, password, rememberMe} = userData;
     const users = await getUsers();
@@ -38,7 +48,7 @@ try{
     }else{
         sessionStorage.setItem("profile", JSON.stringify(user));
     }
-
+    dispatch(setProfile({ ...user, rememberMe }));
     return {success: true};
 }catch(error){
     return {success: false, message: "Something went wrong!"}

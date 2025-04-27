@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
 import { getCurrentUser } from "services/userService";
 import { profile } from "services/authService";
 import Error from "components/common/Error/Error";
@@ -9,6 +10,7 @@ import styles from "./Auth.module.scss";
 
 function Login({onClick}) {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -32,7 +34,7 @@ function Login({onClick}) {
         event.preventDefault();
         setError("");
         try {
-            const response = await profile({ email, password, rememberMe });
+            const response = await profile({ email, password, rememberMe }, dispatch);
             if (response.success) {
             navigate("/profile");
         } else {

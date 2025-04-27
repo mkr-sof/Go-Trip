@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setProfile } from "store/modules/authSlice";
 import { saveDataToLocalStorage } from "services/storageService";
 import InputField from "components/common/InputField/InputField";
+import FileUpload from "components/common/FileUpload/FileUpload";
 import Button from "components/common/Button/Button";
 import styles from "./EditProfile.module.scss";
 
@@ -19,6 +20,22 @@ function EditProfile() {
     const [newPassword, setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
+    const [image, setImage] = useState(profile?.avatar || null);
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImage(reader.result); 
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const handleRemoveImage = () => {
+        setImage(null); 
+    };
 
     const handleSaveUser = (event) => {
         event.preventDefault();
@@ -71,6 +88,11 @@ function EditProfile() {
                     placeholder=" "
                     value={confirmPassword}
                     onChange={(event) => setConfirmPassword(event.target.value)}
+                />
+                <FileUpload
+                    image={image}
+                    onChange={handleImageChange}
+                    onRemoveImage={handleRemoveImage}
                 />
                 <div className={styles.authOptions}>
                     <Button
