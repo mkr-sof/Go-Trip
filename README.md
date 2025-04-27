@@ -1,6 +1,8 @@
 goTrip/
 └── src/
     ├── assets/
+    │   │   ├──images/
+    │   │   └──svgs/
     ├── components/
     │   ├── App/
     │   ├── common/
@@ -9,7 +11,21 @@ goTrip/
     │   │   ├── Feed/
     │   │   ├── Profile/
     │   │   └── NotFound/
-    ├── layouts/
+    │   ├── layouts/
     ├── hooks/
+    │   └── useScrollPosition.js
     ├── routes/
-    └── store/
+    │   └── configureRouter.js
+    ├── services/
+    │   │   ├── authSrevice.js
+    │   │   ├── favoriteSrevice.js
+    │   │   ├── postSrevice.js
+    │   │   ├── storageSrevice.js
+    │   │   └── userSrevice.js
+    ├── store/
+    │   ├── middlewares/
+    │   │   └── asyncFunctionMiddleware.js
+    │   ├──modules/
+    │   │   ├──authSlice.js
+    │   │   └──postSlice.js
+    │   └── configureStore.js
