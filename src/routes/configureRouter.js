@@ -10,13 +10,13 @@ import PostDetails from "components/features/Feed/Posts/PostDetails/PostDetails"
 import CategoryPage from "components/features/Feed/Posts/CategoryPage/CategoryPage";
 
 function configureRouter() {
-    return createBrowserRouter([
+    return createBrowserRouter(
+        [
         {
             element: <App />,
             children: [
                 {
-                    // index: true,
-                    path: "/",
+                    index: true,
                     element: <Feed />
                 },
                 {
@@ -44,11 +44,11 @@ function configureRouter() {
                     element: <Profile />
                 },
                 {
-                    path: "post/:postId",  
+                    path: "post/:postId",
                     element: <PostDetails />
                 },
                 {
-                    path: "category/:categoryName",  
+                    path: "category/:categoryName",
                     element: <CategoryPage />
                 },
                 {
@@ -57,6 +57,9 @@ function configureRouter() {
                 },
             ]
         }
-    ]);
+    ],
+        {
+            basename: "/Go-Trip",
+        });
 }
 export default configureRouter;

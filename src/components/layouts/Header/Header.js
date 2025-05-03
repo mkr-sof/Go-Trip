@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import classNames from "classnames";
 import Logo from "components/common/Logo/Logo";
 import Navbar from "components/layouts/Navbar/Navbar";
 import Avatar from "components/common/Avatar/Avatar";
-import SearchInput from "components/common/SearchInput/SearchInput"
-import { getDataFromLocalStorage } from "services/storageService";
-import { uploadAvatar } from "services/userService";
-import { setProfile, setAvatar } from "store/modules/authSlice";
+import SearchInput from "components/common/SearchInput/SearchInput";
+import { setProfile } from "store/modules/authSlice";
 import { setPosts, filterPosts } from "store/modules/postsSlice";
 import { fetchPosts, searchPosts, resetFilter } from "store/modules/postsSlice";
-import classNames from "classnames";
+
 import styles from "./Header.module.scss";
 
 function Header() {
@@ -18,17 +17,14 @@ function Header() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [searchQuery, setSearchQuery] = useState("");
-    // const [avatarPreview, setAvatarPreview] = useState(user?.avatar || "");
+
     const posts = useSelector((state) => state.posts.posts); 
     const user = useSelector((state) => state.auth.user);
-console.log("avatar", user?.avatar);
-
 
     useEffect(() => {
         if (pathname !== '/login' && pathname !== '/signup') {
             dispatch(setProfile());
-            const allPosts = getDataFromLocalStorage("allPosts") || [];
-            dispatch(setPosts(allPosts));
+            dispatch(setPosts(posts));
             dispatch(fetchPosts());
         }
         if (!pathname.includes("/search")) {
@@ -57,20 +53,13 @@ console.log("avatar", user?.avatar);
             } else {
                 dispatch(filterPosts({
                     filter: "search",
-                    filter: "all",
+                    // filter: "all",
                     sortOrder: "newest",
                     query: searchQuery.trim()
                 }));
                 navigate(`/search?q=${searchQuery.trim()}`);
             }
         }
-    };
-
-    const handleAvatarChange = (event) => {
-      
-    };
-    const handleAvatarDelete = () => {
-       
     };
 
     return (

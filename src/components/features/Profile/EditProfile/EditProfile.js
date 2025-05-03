@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setProfile } from "store/modules/authSlice";
 import { saveDataToLocalStorage } from "services/storageService";
@@ -10,7 +10,6 @@ import styles from "./EditProfile.module.scss";
 
 function EditProfile() {
     const navigate = useNavigate();
-    const location = useLocation();
     const dispatch = useDispatch();
 
     const profile = useSelector((state) => state.auth.user);
@@ -47,7 +46,8 @@ function EditProfile() {
             ...profile,
             name,
             email,
-            password: newPassword || profile?.password
+            password: newPassword || profile?.password,
+            avatar: image || profile?.avatar,
         };
 
         dispatch(setProfile(updatedUser));

@@ -3,7 +3,7 @@ import {  getUsers } from "services/userService";
 import { setProfile } from "store/modules/authSlice";
 
 
-export const signupUser = async (userData, dispatch) => {
+export const signupUser = async (userData) => {
     try {
     const {name, email, password} = userData;
     const users = await getUsers();
@@ -22,7 +22,7 @@ export const signupUser = async (userData, dispatch) => {
         avatar: null,
     };
     saveDataToLocalStorage("users", [...users, newUser]);
-    await profile(newUser, dispatch);
+    await profile(newUser);
     // console.log(newUser)
     return { success: true };
 } catch (error) {

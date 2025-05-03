@@ -29,16 +29,16 @@ function Feed() {
         setShowScrollUp(scrollY > 300);
     });
 
-    useEffect(() => {
-        const allPosts = getDataFromLocalStorage("allPosts") || [];
-        dispatch(setPosts(allPosts));
-    }, [dispatch]);
+    // useEffect(() => {
+    //     const allPosts = getDataFromLocalStorage("allPosts") || [];
+    //     dispatch(setPosts(allPosts));
+    // }, [dispatch]);
 
     useEffect(() => {
         if (posts.length > 0) {
             dispatch(filterPosts({ filter, sortOrder, userId: user?.id }));
         }
-    }, [posts, filter, sortOrder, dispatch, user?.id]);
+    }, [posts, filter, sortOrder, user?.id]);
 
     const handleFilterChange = (filter, sortOrder) => {
         dispatch(filterPosts({ filter, sortOrder, userId: user?.id }));
@@ -51,7 +51,6 @@ function Feed() {
 
     return (
         <div className={styles.feedContainer}>
-            {/* {user && <CreatePost onPostCreated={handleNewPost} />} */}
             {user && (
                 <div className={styles.createHeader}>
                     <p>You can create your own posts</p>
@@ -66,7 +65,7 @@ function Feed() {
             <Suspense fallback={<p>Loading more posts...</p>}>
                 {(filteredPosts || []).length > 0
                     ? (<Posts posts={filteredPosts} />)
-                    : (<Description >There are no cards in the system yet.</Description>)
+                    : (<Description >There are no posts in the system yet.</Description>)
                 }
             </Suspense>
             {showScrollUp && (
@@ -80,16 +79,12 @@ function Feed() {
 
             {isCreateOpen && (
                 <Popup isOpen={isCreateOpen} onClose={() => setIsCreateOpen(false)}>
-                    {/* <div className={styles.popupContainer}>
-                    <div className={styles.popupContent}> */}
                         <CreatePost
                             onPostCreated={(newPost) => {
                                 setIsCreateOpen(false);
                                 handleNewPost(filter, sortOrder, [newPost, ...posts]);
                             }}
                         />
-                    {/* </div>
-                    </div> */}
                 </Popup>
             )}
         </div>

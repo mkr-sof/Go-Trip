@@ -1,5 +1,8 @@
 import React, { useEffect } from "react";
 import { Outlet, useLocation } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setUsers } from "../../store/modules/authSlice";
+import { setPosts } from "../../store/modules/postsSlice";
 import Header from "components/layouts/Header/Header";
 import Content from "components/layouts/Content/Content";
 import Sidebar from "components/layouts/Sidebar/Sidebar";
@@ -9,28 +12,35 @@ import { getUsers } from "services/userService";
 import styles from "./App.module.scss";
 
 function App() {
-const location = useLocation();
-const hideSidebarRoutes = ["/login", "/signup", "/forgot-password", "/profile/edit"];
-const isAuthRoute = hideSidebarRoutes.includes(location.pathname);
+  const location = useLocation();
+  const hideSidebarRoutes = ["/login", "/signup", "/forgot-password", "/profile/edit"];
+  const isAuthRoute = hideSidebarRoutes.includes(location.pathname);
+  const dispatch = useDispatch()
+  useEffect(() => {
+    // clearLocalStorage();
+    const initializeData = async () => {
+      const existingUsers = await getUsers();
+      if (!existingUsers || existingUsers.length === 0) {
+        const { users } = createTestUsers();
+        dispatch(setUsers(users));
+        console.log("Test users created!");
+      }else {
+        dispatch(setUsers(existingUsers));
+      }
 
-useEffect(() => {
-  // clearLocalStorage();
-  const initializeData = async () => {
-  const existingUsers = await getUsers();
-  if (!existingUsers || existingUsers.length === 0) {
-    createTestUsers();
-    console.log("Test users created!");
-  }
+      const existingPosts = await getAllPosts();
+      console.log("Existing posts:", existingPosts);
 
-  const existingPosts = await getAllPosts();
-  console.log("Existing posts:", existingPosts);
-    if (!existingPosts || existingPosts.length === 0) {
-        createTestPosts();
+      if (!existingPosts || existingPosts.length === 0) {
+        const { posts } = createTestPosts();
         console.log("Test posts created!");
-    }
-  };
-  initializeData();
-}, []);
+        dispatch(setPosts(posts));
+      }else {
+        dispatch(setPosts(existingPosts));
+      }
+    };
+    initializeData();
+  }, [dispatch]);
 
   return (
     <div className={styles.container}>
@@ -38,10 +48,10 @@ useEffect(() => {
       <div className={styles.layout}>
         {!isAuthRoute && <Sidebar />}
         <div className={isAuthRoute ? styles.authContainer : styles.mainContent}>
-      <Content className={styles.content} >
-        <Outlet />
-      </Content>
-      </div>
+          <Content className={styles.content} >
+            <Outlet />
+          </Content>
+        </div>
       </div>
     </div>
   );

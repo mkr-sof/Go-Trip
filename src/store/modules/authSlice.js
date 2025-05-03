@@ -42,8 +42,13 @@ const authSlice = createSlice({
                 saveDataToLocalStorage("profile", state.user);
             }
         },
+        setUsers: (state, action) => {
+            const users = action.payload;
+            state.users = users;
+            saveDataToLocalStorage("users", users);
+        },
     },
 });
 
-export const { setProfile, logout, setAvatar } = authSlice.actions;
+export const { setProfile, logout, setAvatar, setUsers } = authSlice.actions;
 export default authSlice.reducer;

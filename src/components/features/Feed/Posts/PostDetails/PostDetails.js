@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleFavorite } from "store/modules/postsSlice";
-import { filterPosts } from "store/modules/postsSlice";
+import { filterPosts, deletePost } from "store/modules/postsSlice";
 import NotFound from "components/features/NotFound/NotFound";
+import Button from "components/common/Button/Button";
 import CreatePost from "components/features/Feed/CreatePost/CreatePost";
 import Popup from "components/common/Popup/Popup";
+import PostInfo from "components/common/PostInfo/PostInfo";
 import styles from "./PostDetails.module.scss";
 
 function PostDetails() {
@@ -20,17 +21,9 @@ function PostDetails() {
         state.posts.posts.find((p) => p.id.toString() === postId)
     );
 
-    const favorites = useSelector((state) => state.posts.favorites);
-    const isFavorited = favorites.includes(post?.id);
-
     if (!post) {
         return <NotFound />;
     }
-
-    const handleFavorite = () => {
-        if (!user) return;
-        dispatch(toggleFavorite(post.id));
-    };
 
     const handleAuthorClick = () => {
         dispatch(filterPosts({ filter: "author", userId: post.authorId, sortOrder: "newest" }));
@@ -44,35 +37,41 @@ function PostDetails() {
     const handleClosePopup = () => {
         setIsEditing(false);
     };
+    const handleDelete = () => {
+        dispatch(deletePost(post.id)); 
+        navigate(-1);
+    };
 
     return (
         <div className={styles.postContainer}>
+        <Button 
+            className={styles.backButton}
+            onClick={() => navigate(-1)}
+            text="Back"
+        />
 
-            <button className={styles.backButton} onClick={() => navigate(-1)}>⬅ Go Back</button>
-            
-            <h2 className={styles.postTitle}>{post.title}</h2>
-            <p className={styles.postDescription}>{post.description}</p>
-            <span className={styles.postAuthor} onClick={handleAuthorClick}>
-                {post.authorName}
-            </span>
-            {post.image && (
-                <img className={styles.postImage} src={post.image} alt="Post" />
+        <PostInfo
+            post={post}
+            onAuthorClick={handleAuthorClick}
+            showFullDescription={true}
+        />
+
+        <div className={styles.postActions}>
+            {user && user.id === post.authorId && (
+                <>
+                <Button 
+                    className={styles.editButton}
+                    onClick={handleEdit}
+                    text="Edit"
+                />
+                <Button 
+                    className={styles.deleteButton}
+                    onClick={handleDelete}
+                    text="Delete"
+                />
+            </>
             )}
-            <div className={styles.postActions}>
-                {user && (
-                    <button
-                        className={`${styles.favoriteButton} ${
-                            isFavorited ? styles.favorited : ""
-                        }`}
-                        onClick={handleFavorite}
-                    >
-                        {isFavorited ? "❤️ Unfavorite" : "🤍 Favorite"}
-                    </button>
-                )}
-                {user && user.id === post.authorId && (
-                    <button className={styles.editButton} onClick={handleEdit}>Edit</button>
-                )}
-            </div>
+        </div>
 
             {isEditing && (
                 <Popup onClose={handleClosePopup}>

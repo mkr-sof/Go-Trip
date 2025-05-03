@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { signupUser } from "services/authService";
 import Error from "components/common/Error/Error";
 import InputField from "components/common/InputField/InputField";
@@ -13,6 +14,7 @@ function Signup({onClick}) {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -27,7 +29,7 @@ function Signup({onClick}) {
         try {
             const userData = { name, email, password };
             console.log("Submitting signup form...");
-            const response = await signupUser(userData);
+            const response = await signupUser(userData, dispatch);
             if(response.success){
                 // console.log("Signup successful, navigating to profile...");
                 navigate("/profile");

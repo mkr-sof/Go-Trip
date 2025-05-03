@@ -24,12 +24,6 @@ const postsSlice = createSlice({
             const posts = action.payload;
             state.posts = posts;
             state.filteredPosts = [...posts];
-            // state.posts = action.payload;
-            // state.byId = action.payload.reduce((acc, post) => {
-            //     acc[post.id] = post;
-            //     return acc;
-            // }, {});
-            // state.filteredPosts = action.payload;
         },
         updatePost: (state, action) => {
             const updatedPost = action.payload;
@@ -38,6 +32,7 @@ const postsSlice = createSlice({
             );
             state.filteredPosts = [...state.posts];
             saveDataToLocalStorage("allPosts", state.posts);
+            saveDataToLocalStorage("users", state.users);
         },
         createPost: (state, action) => {
             const newPost = action.payload;
@@ -45,22 +40,24 @@ const postsSlice = createSlice({
             state.filteredPosts = [...state.posts];
             state.users = state.users.map(user => {
                 if (user.id === newPost.authorId) {
-                  const updatedUserPosts = user.posts ? [...user.posts, newPost] : [newPost];
-                  return { ...user, posts: updatedUserPosts };
+                    const updatedUserPosts = user.posts
+                        ? [...user.posts, newPost]
+                        : [newPost];
+                    return { ...user, posts: updatedUserPosts };
                 }
                 return user;
-              });
+            });
             saveDataToLocalStorage("allPosts", state.posts);
             saveDataToLocalStorage('users', state.users);
             console.log("Post added to Redux state and localStorage:", state.posts);
         },
         filterPosts: (state, action) => {
-            const { 
-                filter, 
-                sortOrder, 
-                userId, 
-                category, 
-                query 
+            const {
+                filter,
+                sortOrder,
+                userId,
+                category,
+                query
             } = action.payload;
 
             state.filterQuery = query || "";
@@ -113,10 +110,27 @@ const postsSlice = createSlice({
                 state.filteredPosts = state.posts.filter(post => state.favorites.includes(post.id));
             }
         },
+        deletePost: (state, action) => {
+            const postId = action.payload;
+            state.posts = state.posts.filter(post => post.id !== postId);
+            state.filteredPosts = state.filteredPosts.filter(post => post.id !== postId);
 
+            const allPosts = state.posts;
+            saveDataToLocalStorage("allPosts", allPosts);
+
+            let users = getUsers() || [];
+            const updatedUsers = users.map(user => {
+                if (user.posts) {
+                    const updatedUserPosts = user.posts.filter(post => post.id !== postId);
+                    return { ...user, posts: updatedUserPosts };
+                }
+                return user;
+            });
+            saveDataToLocalStorage("users", updatedUsers);
+        },
         searchPosts: (state, action) => {
             const query = action.payload?.toLowerCase();
-        
+
             let search = state.posts;
 
             if (state.filter === "favorites") {
@@ -124,16 +138,16 @@ const postsSlice = createSlice({
             } else if (state.filter === "author" && state.filterUserId) {
                 search = state.posts.filter(post => post.authorId === state.filterUserId);
             }
-        
+
             state.filteredPosts = search.filter((post) =>
                 post.title?.toLowerCase().includes(query) ||
                 post.description?.toLowerCase().includes(query)
             );
-        
+
             state.filterQuery = query;
-            state.filter = "search"; 
+            state.filter = "search";
         },
-        
+
         resetFilter: (state) => {
             state.filteredPosts = [...state.posts];
             state.filter = "all";
@@ -142,14 +156,15 @@ const postsSlice = createSlice({
     },
 });
 
-export const { 
-    setPosts, 
-    filterPosts, 
-    createPost, 
-    toggleFavorite, 
-    updatePost, 
-    searchPosts, 
-    resetFilter 
+export const {
+    setPosts,
+    filterPosts,
+    createPost,
+    toggleFavorite,
+    updatePost,
+    deletePost,
+    searchPosts,
+    resetFilter
 } = postsSlice.actions;
 
 export const fetchPosts = () => async (dispatch) => {

@@ -81,6 +81,7 @@ export const createTestUsers = () => {
     ];
 
     saveDataToLocalStorage("users", testUsers);
+    return { users: testUsers };
 };
 
 
@@ -102,53 +103,54 @@ export const createTestPosts = () => {
     ];
 
     const categoryImages = {
-    Adventure: [
-        adventure1,
-        adventure2,
-        adventure3,
-        adventure4
-    ],
-    Nature: [
-        nature1,
-        nature2,
-        nature3,
-        nature4
-    ],
-    "City Trips": [
-        cityTrips1,
-        cityTrips2,
-        cityTrips3,
-        cityTrips4
-    ],
-    Beach: [
-        beach1,
-        beach2,
-        beach3,
-        beach4
-    ]
-};
-const testPosts = users.flatMap(user =>
-    categories.map((category, index) => {
-        const randomImage = categoryImages[category][Math.floor(Math.random() * 4)];
-        const newPost = {
-            id: uuidv4(),
-            authorId: user.id,
-            authorName: user.name,
-            title: `Test Post ${index + 1} by ${user.name}`,
-            description: sampleDescriptions[index],
-            category: category,  
-            image: randomImage,
-            created_at: new Date().toISOString(),
-            updated_at: new Date().toISOString(),
-            isFavorite: false,
-        };
-        user.posts = user.posts || []; 
-        user.posts.push(newPost);
+        Adventure: [
+            adventure1,
+            adventure2,
+            adventure3,
+            adventure4
+        ],
+        Nature: [
+            nature1,
+            nature2,
+            nature3,
+            nature4
+        ],
+        "City Trips": [
+            cityTrips1,
+            cityTrips2,
+            cityTrips3,
+            cityTrips4
+        ],
+        Beach: [
+            beach1,
+            beach2,
+            beach3,
+            beach4
+        ]
+    };
+    const testPosts = users.flatMap(user =>
+        categories.map((category, index) => {
+            const randomImage = categoryImages[category][Math.floor(Math.random() * 4)];
+            const newPost = {
+                id: uuidv4(),
+                authorId: user.id,
+                authorName: user.name,
+                title: `Test Post ${index + 1} by ${user.name}`,
+                description: sampleDescriptions[index],
+                category: category,
+                image: randomImage,
+                created_at: new Date().toISOString(),
+                updated_at: new Date().toISOString(),
+                isFavorite: false,
+            };
+            user.posts = user.posts || [];
+            user.posts.push(newPost);
 
-        return newPost;
-    })
-);
-saveDataToLocalStorage("users", users);
+            return newPost;
+        })
+    );
+    saveDataToLocalStorage("users", users);
     saveDataToLocalStorage("allPosts", testPosts);
     console.log("Test posts created!");
+    return { posts: testPosts }
 };
