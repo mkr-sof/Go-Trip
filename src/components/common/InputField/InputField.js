@@ -3,7 +3,7 @@ import classNames from "classnames";
 import styles from "./InputField.module.scss";
 
 
-function InputField({label, type, placeholder, className, value, onChange}){
+function InputField({label, name, type, placeholder, className, value, onChange, onBlur}){
     const inputClassName = classNames(
         styles.inputField, 
         className
@@ -11,14 +11,18 @@ function InputField({label, type, placeholder, className, value, onChange}){
     return(
         <div className={styles.inputContainer}>
             <input
+                id={name}
                 type={type}
+                name={name}
                 value={value}
                 onChange={onChange}
+                onBlur={onBlur}
                 className={inputClassName}
+                autoComplete="off"
                 placeholder={placeholder}
                 required
             />
-            {label && <label className={styles.inputLabel}>{label}</label>}
+            {label && <label htmlFor={name} className={styles.inputLabel}>{label}</label>}
         </div>
     );
 }

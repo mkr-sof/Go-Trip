@@ -31,6 +31,16 @@ const postsSlice = createSlice({
                 post.id === updatedPost.id ? { ...post, ...updatedPost } : post
             );
             state.filteredPosts = [...state.posts];
+            state.users = state.users.map(user => {
+                if (user.posts) {
+                    const updatedUserPosts = user.posts.map(post =>
+                        post.id === updatedPost.id ? { ...post, ...updatedPost } : post
+                    );
+                    return { ...user, posts: updatedUserPosts };
+                }
+                return user;
+            });
+
             saveDataToLocalStorage("allPosts", state.posts);
             saveDataToLocalStorage("users", state.users);
         },

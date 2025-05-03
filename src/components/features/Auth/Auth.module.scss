@@ -43,6 +43,41 @@
     gap: 10px;
     color: #fff;
 }
- 
+.fieldError {
+    color: #e63946;
+    font-size: 0.9rem;
+    margin: 4px 0 12px;
+  }
+  
+  .passwordWrapper {
+    position: relative;
+  }
+  
+  .toggle {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+
+.eyeIcon {
+    width: 1.25rem; 
+    height: 1.25rem;
+    color: #555;     
+  }
+  
+  .toggle:hover .eyeIcon {
+    color: #007bff; 
+  }
+  
+  .link {
+    color: #007bff;
+    cursor: pointer;
+  }
+  
 
   

@@ -43,9 +43,8 @@ const authSlice = createSlice({
             }
         },
         setUsers: (state, action) => {
-            const users = action.payload;
-            state.users = users;
-            saveDataToLocalStorage("users", users);
+            state.users = action.payload;
+            saveDataToLocalStorage("users", state.users);
         },
     },
 });

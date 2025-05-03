@@ -5,9 +5,9 @@ import InputField from "components/common/InputField/InputField";
 import Button from "components/common/Button/Button";
 import SelectField from "components/common/SelectField/SelectField";
 import FileUpload from "components/common/FileUpload/FileUpload";
-import { getCurrentUser } from "services/userService";
-import { createPost } from "store/modules/postsSlice";
-import { updatePost } from "store/modules/postsSlice";
+import { getCurrentUser, getUsers } from "services/userService";
+import { createPost, updatePost } from "store/modules/postsSlice";
+import { setUsers, setProfile } from "store/modules/authSlice";
 import styles from "./CreatePost.module.scss";
 
 function CreatePost({
@@ -40,7 +40,7 @@ function CreatePost({
 
     const handleCreatePost = async (event) => {
         event.preventDefault();
-        if (!title && !description && !category) return;
+        // if (!title && !description && !category) return;
 
         const user = getCurrentUser();
 
@@ -62,9 +62,13 @@ function CreatePost({
         } else {
             result = await dispatch(createPost(updatedPost));
         }
+        const updatedUser = {
+            ...user,
+            posts: [...user.posts, updatedPost], 
+        };
+    
+        dispatch(setProfile(updatedUser)); 
         onPostCreated(result.payload);
-
-
         setTitle("");
         setDescription("");
         setImage("");
