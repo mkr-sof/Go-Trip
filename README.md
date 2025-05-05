@@ -2,7 +2,8 @@
 
 🌍 GoTrip
 
-GoTrip is a modern travel-themed social media app where users can explore, share, and discover travel experiences around the world. Built with a modular React architecture, GoTrip includes user authentication, post feeds, favorites, and category filtering.
+GoTrip is a modern travel-themed social media app where users can explore, share, and discover travel experiences around the world. 
+Built with a modular React architecture, GoTrip includes user authentication, post feeds, favorites, and category filtering.
 
 
 Features
@@ -12,7 +13,7 @@ Features
 . Create & Edit Posts (title, description, image)
 . Favorite Posts you like
 . Search & Sort posts by time or interest
-. Edit Profile (name, password, email?(need review), avatar)
+. Edit Profile (name, password, email _(needs review)_, avatar)
 . Clean, dark-themed UI
 
 
