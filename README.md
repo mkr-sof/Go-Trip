@@ -20,7 +20,7 @@ Guest View
 
     Here's what the main feed looks like for a guest user:
 
- ![main screenshot](./docs/main-screenshot.png)
+ ![main screenshot](docs/main-screenshot.png)
 
     
  Signup Validation
@@ -31,7 +31,7 @@ The signup page includes full client-side validation, ensuring:
 . Matching password confirmation
 . This helps ensure data integrity and improve user experience.
 
- ![signup screenshot](./docs/signup-screenshot.png)
+ ![signup screenshot](docs/signup-screenshot.png)
 
 User Profile Management
     
@@ -40,33 +40,33 @@ Once authenticated, users can:
 Edit their profile information, including:
 Name, Email, Password (with proper validation), Avatar image
 
-  ![edit profile screenshot](./docs/edit-profile-screenshot.png)
+  ![edit profile screenshot](docs/edit-profile-screenshot.png)
     
 Logged-In View
   
     Authenticated users see their info and can post, favorite, and edit their profiles.
     
-  ![logged in screenshot](./docs/login-screenshot.png)  
+  ![logged in screenshot](docs/login-screenshot.png)  
     
 After logging in, users can:
 . View their email and profile
 . Create their own posts
 . Favorite others' posts
 
- ![create post screenshot](./docs/create-post-screenshot)
+ ![create post screenshot](docs/create-post-screenshot)
 
 Also, after logging in, users can:
 . Delete post
 . Edit post
 
-    ![post details screenshot](.docs/post-details-screenshot.png)
+    ![post details screenshot](docs/post-details-screenshot.png)
 
 Post Editing
 Authenticated users can:
 Edit their own posts, including:
 Title, Description, Image
 
-  ![edit post screenshot](.docs/edit-post-screenshot.png)
+  ![edit post screenshot](docs/edit-post-screenshot.png)
     
 Project Structure
 
