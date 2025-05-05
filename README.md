@@ -127,7 +127,7 @@ Local Storage
 git clone https://github.com/mkr-sof/Go-Trip.git
 cd goTrip
 npm install
-npm run dev
+npm run start
 
 
     
