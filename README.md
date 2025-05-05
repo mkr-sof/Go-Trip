@@ -103,14 +103,14 @@ goTrip/
     │   ├── postSrevice.js
     │   ├── storageSrevice.js
     │   └── userSrevice.js
-    ├── store/
-    │   ├── middlewares/
-    │   │   └── asyncFunctionMiddleware.js
-    │   ├── modules/
-    │   │   ├── authSlice.js
-    │   │   └── postSlice.js
-    │   └── configureStore.js
-    └──package.json
+    └── store/
+        ├── middlewares/
+        │   └── asyncFunctionMiddleware.js
+        ├── modules/
+        │   ├── authSlice.js
+        │   └── postSlice.js
+        └── configureStore.js
+   
 
 
 
