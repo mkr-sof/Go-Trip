@@ -5,7 +5,7 @@
 GoTrip is a modern travel-themed social media app where users can explore, share, and discover travel experiences around the world. Built with a modular React architecture, GoTrip includes user authentication, post feeds, favorites, and category filtering.
 
 
-    ![main screenshot](https://github.com/user-attachments/assets/37604d62-c310-4776-ae71-3c3a56916930)
+    ![main screenshot](./docs/main-screenshot.png)
 
 goTrip/
 └── src/
