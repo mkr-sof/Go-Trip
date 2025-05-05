@@ -21,6 +21,8 @@ Guest View
     Here's what the main feed looks like for a guest user:
 
  ![main screenshot](docs/main-screenshot.png)
+    ![Main Screenshot](https://raw.githubusercontent.com/mkr-sof/Go-Trip/refs/heads/main/docs/main-screenshot.png)
+
 
     
  Signup Validation
@@ -32,6 +34,7 @@ The signup page includes full client-side validation, ensuring:
 . This helps ensure data integrity and improve user experience.
 
  ![signup screenshot](docs/signup-screenshot.png)
+    ![Signup Screenshot](https://raw.githubusercontent.com/mkr-sof/Go-Trip/refs/heads/main/docs/signup-screenshot.png)
 
 User Profile Management
     
@@ -41,12 +44,14 @@ Edit their profile information, including:
 Name, Email, Password (with proper validation), Avatar image
 
   ![edit profile screenshot](docs/edit-profile-screenshot.png)
+    ![Edit Profile](https://raw.githubusercontent.com/mkr-sof/Go-Trip/refs/heads/main/docs/edit-profile-screenshot.png)
     
 Logged-In View
   
     Authenticated users see their info and can post, favorite, and edit their profiles.
     
   ![logged in screenshot](docs/login-screenshot.png)  
+    ![Logged in Profile](https://raw.githubusercontent.com/mkr-sof/Go-Trip/refs/heads/main/docs/login-screenshot.png)
     
 After logging in, users can:
 . View their email and profile
@@ -54,12 +59,14 @@ After logging in, users can:
 . Favorite others' posts
 
  ![create post screenshot](docs/create-post-screenshot)
+    ![Create Post](https://raw.githubusercontent.com/mkr-sof/Go-Trip/refs/heads/main/docs/create-post-screenshot.png)
 
 Also, after logging in, users can:
 . Delete post
 . Edit post
 
     ![post details screenshot](docs/post-details-screenshot.png)
+    ![Post Details Profile](https://raw.githubusercontent.com/mkr-sof/Go-Trip/refs/heads/main/docs/post-details-screenshot.png)
 
 Post Editing
 Authenticated users can:
@@ -67,6 +74,7 @@ Edit their own posts, including:
 Title, Description, Image
 
   ![edit post screenshot](docs/edit-post-screenshot.png)
+    ![Edit Post Profile](https://raw.githubusercontent.com/mkr-sof/Go-Trip/refs/heads/main/docs/edit-post-screenshot.png)
     
 Project Structure
 
@@ -115,9 +123,12 @@ Local Storage
 
     Getting Started
 
-git clone https://github.com/your-username/goTrip.git
+git clone https://github.com/mkr-sof/Go-Trip.git
 cd goTrip
 npm install
 npm run dev
 
+
+    
+Feel free to fork the repo, open issues, or contribute!
 </pre>
