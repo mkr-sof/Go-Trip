@@ -19,7 +19,7 @@ Features
 
 ## Guest View
 
-    Here's what the main feed looks like for a guest user:
+Here's what the main feed looks like for a guest user:
 
  ![main screenshot](docs/main-screenshot.png)
    
