@@ -1,6 +1,8 @@
 import { saveDataToLocalStorage, removeDataFromLocalStorage } from 'services/storageService';
 import { getUsers } from "services/userService";
 import { setProfile, setUsers } from "store/modules/authSlice";
+import { logout } from "store/modules/authSlice";
+import { clearFavorites } from "store/modules/postsSlice";
 import avatar from "assets/avatars/default-avatar.jpg";
 import store from "store/configureStore";
 
@@ -15,6 +17,8 @@ export const signupUser = async (userData) => {
         if (existingUser) {
             return { success: false, message: "User alredy exists!" };
         }
+        removeDataFromLocalStorage("favorites");
+        store.dispatch(clearFavorites());
         const newUser = {
             id: Date.now(),
             name,
@@ -53,6 +57,7 @@ export const profile = async (userData, dispatch) => {
         } else {
             sessionStorage.setItem("profile", JSON.stringify(user));
         }
+        store.dispatch(clearFavorites());
         dispatch(setProfile({ ...user, rememberMe }));
         return { success: true };
     } catch (error) {
@@ -67,24 +72,28 @@ export const resetPassword = async (email, newPassword) => {
         if (!user) {
             return { success: false, message: "User with this email does not exist." };
         }
- user.password = newPassword;
+        user.password = newPassword;
 
-    await setUsers(users);
+        await setUsers(users);
 
-    store.dispatch({
-      type: 'auth/updateUserPassword',
-      payload: { email, newPassword }
-    });
+        store.dispatch({
+            type: 'auth/updateUserPassword',
+            payload: { email, newPassword }
+        });
 
-    return { success: true, message: "Password successfully updated." };    } catch (error) {
+        return { success: true, message: "Password successfully updated." };
+    } catch (error) {
         return { success: false, message: "Something went wrong!" };
     }
 }
 
 export const logoutUser = async () => {
     try {
-        removeDataFromLocalStorage("profile");
-        sessionStorage.removeItem("profile");
+        // removeDataFromLocalStorage("profile");
+        // sessionStorage.removeItem("profile");
+        const userId = store.getState().auth.user?.id;
+        store.dispatch(clearFavorites(userId));
+        store.dispatch(logout());
     } catch (error) {
         console.error("Error during logout", error);
     }

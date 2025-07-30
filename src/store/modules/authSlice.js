@@ -14,6 +14,7 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         setProfile: (state, action) => {
+            console.log("Action dispatched:", action);
             const user = action.payload ? action.payload : getCurrentUser();
             state.user = user;
             const rememberMe = action.payload?.rememberMe;
@@ -23,12 +24,13 @@ const authSlice = createSlice({
             } else {
                 sessionStorage.setItem("profile", JSON.stringify(state.user));
             }
-            if (action.payload) {
-                state.users = state.users.filter(user => user.id !== action.payload.id);
-                state.users.push(action.payload);
+            // if (action.payload) {
+            //     state.users = state.users.filter(user => user.id !== action.payload.id);
+            //     console.log("Updated users:", state.users);
+            //     state.users.push(action.payload);
 
-                saveDataToLocalStorage("users", state.users);
-            }
+            //     saveDataToLocalStorage("users", state.users);
+            // }
         },
         updateUserPassword: (state, action) => {
             const { email, newPassword } = action.payload;

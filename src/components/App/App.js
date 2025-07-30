@@ -7,6 +7,7 @@ import Header from "components/layouts/Header/Header";
 import Content from "components/layouts/Content/Content";
 import Sidebar from "components/layouts/Sidebar/Sidebar";
 import ErrorBoundary from "components/ErrorBoundary/ErrorBoundary";
+import { getDataFromLocalStorage, removeDataFromLocalStorage } from "services/storageService";
 import { createTestUsers, createTestPosts, clearLocalStorage } from "services/storageService";
 import { getAllPosts } from "services/postService";
 import { getUsers } from "services/userService";
@@ -17,6 +18,7 @@ function App() {
   const hideSidebarRoutes = ["/login", "/signup", "/forgot-password", "/profile/edit"];
   const isAuthRoute = hideSidebarRoutes.includes(location.pathname);
   const dispatch = useDispatch()
+
   useEffect(() => {
     // clearLocalStorage();
     const initializeData = async () => {
@@ -42,6 +44,13 @@ function App() {
     };
     initializeData();
   }, [dispatch]);
+
+  useEffect(() => {
+    const profile = getDataFromLocalStorage("profile") || sessionStorage.getItem("profile");
+    if (!profile) {
+      removeDataFromLocalStorage("favorites");
+    }
+  }, []);
 
   return (
     <div className={styles.container}>

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getAllPosts } from "services/postService";
 import { getUsers } from "services/userService";
-import { getDataFromLocalStorage, saveDataToLocalStorage } from "services/storageService";
+import { getDataFromLocalStorage, saveDataToLocalStorage, removeDataFromLocalStorage } from "services/storageService";
 
 const initialFavorites = getDataFromLocalStorage("favorites") || [];
 
@@ -163,6 +163,14 @@ const postsSlice = createSlice({
             state.filter = "all";
             state.filterUserId = null;
         },
+        clearFavorites: (state, action) => {
+            state.favorites = [];
+            const userId = action.payload;
+            if (userId) {
+                removeDataFromLocalStorage(`favorites_${userId}`);
+            }
+        }
+
     },
 });
 
@@ -174,7 +182,8 @@ export const {
     updatePost,
     deletePost,
     searchPosts,
-    resetFilter
+    resetFilter,
+    clearFavorites
 } = postsSlice.actions;
 
 export const fetchPosts = () => async (dispatch) => {
