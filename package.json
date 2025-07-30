@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://mkr-sof.github.io/Go-Trip",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^7.0.0",
     "@reduxjs/toolkit": "^2.6.1",
     "@testing-library/jest-dom": "^6.6.3",
     "classnames": "^2.5.1",

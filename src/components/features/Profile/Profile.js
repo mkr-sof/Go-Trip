@@ -23,7 +23,7 @@ function Profile() {
 
 
     if (!profileUser) {
-        return <p>Loading...</p>;
+        return <Description>Loading...</Description>;
     }
     const filteredPosts = posts.filter(post => +post.authorId === profileUser.id);
 
@@ -39,7 +39,7 @@ function Profile() {
                     {filteredPosts.length > 0 ? ( // Use local state here
                         filteredPosts.map(post => <PostCard key={post.id} post={post} />)
                     ) : (
-                        <p>No posts found</p>
+                        <Description>No posts found</Description>
                     )}
                 </>
             )}

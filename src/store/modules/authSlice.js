@@ -23,13 +23,37 @@ const authSlice = createSlice({
             } else {
                 sessionStorage.setItem("profile", JSON.stringify(state.user));
             }
-            if(action.payload){
-            state.users = state.users.filter(user => user.id !== action.payload.id);
-            state.users.push(action.payload);
+            if (action.payload) {
+                state.users = state.users.filter(user => user.id !== action.payload.id);
+                state.users.push(action.payload);
 
-            saveDataToLocalStorage("users", state.users);
+                saveDataToLocalStorage("users", state.users);
             }
         },
+        updateUserPassword: (state, action) => {
+            const { email, newPassword } = action.payload;
+
+            const userIndex = state.users.findIndex(user => user.email === email);
+            if (userIndex !== -1) {
+                state.users[userIndex].password = newPassword;
+            }
+
+            if (state.user && state.user.email === email) {
+                state.user.password = newPassword;
+            }
+
+            saveDataToLocalStorage("users", state.users);
+
+            if (state.user) {
+                const rememberMe = state.user.rememberMe;
+                if (rememberMe) {
+                    saveDataToLocalStorage("profile", state.user);
+                } else {
+                    sessionStorage.setItem("profile", JSON.stringify(state.user));
+                }
+            }
+        },
+
         logout: (state) => {
             state.user = null;
             state.users = getDataFromLocalStorage("users") || [];
@@ -49,5 +73,5 @@ const authSlice = createSlice({
     },
 });
 
-export const { setProfile, logout, setAvatar, setUsers } = authSlice.actions;
+export const { setProfile, logout, setAvatar, setUsers, updateUserPassword } = authSlice.actions;
 export default authSlice.reducer;

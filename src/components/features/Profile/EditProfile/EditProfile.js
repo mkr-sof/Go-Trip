@@ -60,7 +60,7 @@ function EditProfile() {
         <>
             <h2>Edit Profile</h2>
             {error && <p className={styles.error}>{error}</p>}
-            <form className={styles.formContainer} onSubmit={handleSaveUser}>
+            <form className={styles.formContainer} noValidate onSubmit={handleSaveUser}>
                 <InputField
                     label="Full Name"
                     type="text"
@@ -73,7 +73,7 @@ function EditProfile() {
                     type="email"
                     placeholder=" "
                     value={email}
-                    onChange={(event) => setEmail(event.target.value)}
+                    disabled
                 />
                 <InputField
                     label="New Password"
@@ -97,7 +97,6 @@ function EditProfile() {
                 <div className={styles.authOptions}>
                     <Button
                         type="submit"
-                        disabled={!name || !email}
                         text="Save"
                     />
                     <Button

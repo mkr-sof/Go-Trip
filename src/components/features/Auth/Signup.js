@@ -9,6 +9,7 @@ import Error from "components/common/Error/Error";
 import InputField from "components/common/InputField/InputField";
 import Button from "components/common/Button/Button";
 import styles from "./Auth.module.scss";
+import Description from "components/common/Description/Description";
 
 function Signup({ onClick }) {
     const [name, setName] = useState("");
@@ -98,7 +99,7 @@ function Signup({ onClick }) {
             dispatch(setUsers([...(users || []), user]));
             dispatch(setProfile(user));
 
-            navigate("/profile");
+            navigate("/");
 
 
         } catch (error) {
@@ -193,8 +194,8 @@ function Signup({ onClick }) {
                 />
             </form>
             <div>
-                <p>Already have an account?</p>
-                <span className={styles.link} onClick={() => navigate("/login")}>Login</span>
+                <Description>Already have an account?<span className={styles.link} onClick={() => navigate("/login")}>  Login</span></Description>
+                
             </div>
         </div>
     );

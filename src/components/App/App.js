@@ -6,6 +6,7 @@ import { setPosts } from "../../store/modules/postsSlice";
 import Header from "components/layouts/Header/Header";
 import Content from "components/layouts/Content/Content";
 import Sidebar from "components/layouts/Sidebar/Sidebar";
+import ErrorBoundary from "components/ErrorBoundary/ErrorBoundary";
 import { createTestUsers, createTestPosts, clearLocalStorage } from "services/storageService";
 import { getAllPosts } from "services/postService";
 import { getUsers } from "services/userService";
@@ -24,7 +25,7 @@ function App() {
         const { users } = createTestUsers();
         dispatch(setUsers(users));
         console.log("Test users created!");
-      }else {
+      } else {
         dispatch(setUsers(existingUsers));
       }
 
@@ -35,7 +36,7 @@ function App() {
         const { posts } = createTestPosts();
         console.log("Test posts created!");
         dispatch(setPosts(posts));
-      }else {
+      } else {
         dispatch(setPosts(existingPosts));
       }
     };
@@ -49,7 +50,9 @@ function App() {
         {!isAuthRoute && <Sidebar />}
         <div className={isAuthRoute ? styles.authContainer : styles.mainContent}>
           <Content className={styles.content} >
-            <Outlet />
+            <ErrorBoundary>
+              <Outlet />
+            </ErrorBoundary>
           </Content>
         </div>
       </div>

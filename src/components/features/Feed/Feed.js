@@ -3,16 +3,16 @@ import React, { useState, useEffect, lazy, Suspense } from "react";
 import { useScrollPosition } from "hooks/useScrollPosition";
 import { useDispatch, useSelector } from "react-redux";
 import Filters from "components/common/Filters/Filters";
-import { getDataFromLocalStorage } from "services/storageService";
-import CreatePost from "components/features/Feed/CreatePost/CreatePost";
 import Description from "components/common/Description/Description";
 import Button from "components/common/Button/Button";
-import Popup from "components/common/Popup/Popup";
-import { setPosts, filterPosts } from "store/modules/postsSlice";
+import { filterPosts } from "store/modules/postsSlice";
 
 import styles from "./Feed.module.scss";
-
-
+// const Posts = lazy(() =>
+//   new Promise(resolve => {
+//     setTimeout(() => resolve(import("components/features/Feed/Posts/Posts")), 2000);
+//   })
+// );
 const Posts = lazy(() => import("components/features/Feed/Posts/Posts"));
 
 function Feed() {
@@ -23,7 +23,6 @@ function Feed() {
     const user = useSelector((state) => state.auth.user);
     const sortOrder = useSelector((state) => state.posts.sortOrder);
 
-    const [isCreateOpen, setIsCreateOpen] = useState(false);
     const [showScrollUp, setShowScrollUp] = useState(false);
     useScrollPosition((scrollY) => {
         setShowScrollUp(scrollY > 300);
@@ -43,26 +42,11 @@ function Feed() {
     const handleFilterChange = (filter, sortOrder) => {
         dispatch(filterPosts({ filter, sortOrder, userId: user?.id }));
     };
-
-    const handleNewPost = (filter, sortOrder, updatedPosts) => {
-        dispatch(setPosts(updatedPosts));
-        dispatch(filterPosts({ filter, sortOrder, userId: user?.id }));
-    };
-
     return (
         <div className={styles.feedContainer}>
-            {user && (
-                <div className={styles.createHeader}>
-                    <p>You can create your own posts</p>
-                    <Button
-                        text="Create"
-                        onClick={() => setIsCreateOpen(true)}
-                        className={styles.createTrigger}
-                    />
-                </div>
-            )}
-            {posts.length > 0 && <Filters onFilterChange={handleFilterChange} />}
-            <Suspense fallback={<p>Loading more posts...</p>}>
+            
+            {posts.length > 0 && user && <Filters onFilterChange={handleFilterChange} />}
+            <Suspense fallback={<Description>Loading more posts...</Description>}>
                 {(filteredPosts || []).length > 0
                     ? (<Posts posts={filteredPosts} />)
                     : (<Description >There are no posts in the system yet.</Description>)
@@ -77,17 +61,7 @@ function Feed() {
                 </Button>
             )}
 
-            {isCreateOpen && (
-                <Popup isOpen={isCreateOpen} onClose={() => setIsCreateOpen(false)}>
-                        <CreatePost
-                            onPostCreated={(newPost) => {
-                                setIsCreateOpen(false);
-                                handleNewPost(filter, sortOrder, [newPost, ...posts]);
-                            }}
-                        />
-                </Popup>
-            )}
-        </div>
+            </div>
     );
 }
 

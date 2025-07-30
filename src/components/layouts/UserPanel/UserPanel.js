@@ -13,7 +13,7 @@ function UserPanel() {
 
     const handleLogout = () => {
         dispatch(logout());
-        navigate("/login");
+        navigate("/");
     };
 
     if (!user) {
@@ -72,3 +72,5 @@ function UserPanel() {
 }
 
 export default UserPanel;
+
+

@@ -36,7 +36,7 @@ function Login({onClick}) {
         try {
             const response = await profile({ email, password, rememberMe }, dispatch);
             if (response.success) {
-            navigate("/profile");
+            navigate("/");
         } else {
             setError(response.message);
         }

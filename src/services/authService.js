@@ -1,6 +1,8 @@
 import { saveDataToLocalStorage, removeDataFromLocalStorage } from 'services/storageService';
 import { getUsers } from "services/userService";
-import { setProfile } from "store/modules/authSlice";
+import { setProfile, setUsers } from "store/modules/authSlice";
+import avatar from "assets/avatars/default-avatar.jpg";
+import store from "store/configureStore";
 
 
 export const signupUser = async (userData) => {
@@ -19,7 +21,7 @@ export const signupUser = async (userData) => {
             email,
             password,
             posts: [],
-            avatar: null,
+            avatar: avatar,
             isVerified: false,
             rememberMe: false
         };
@@ -58,15 +60,23 @@ export const profile = async (userData, dispatch) => {
     }
 }
 
-export const resetPassword = async (email) => {
+export const resetPassword = async (email, newPassword) => {
     try {
         const users = await getUsers();
         const user = users.find(user => user.email === email);
         if (!user) {
-            return { success: false, message: "User not found." };
+            return { success: false, message: "User with this email does not exist." };
         }
-        return { success: true, message: "Password reset instructions have been sent to your email." };
-    } catch (error) {
+ user.password = newPassword;
+
+    await setUsers(users);
+
+    store.dispatch({
+      type: 'auth/updateUserPassword',
+      payload: { email, newPassword }
+    });
+
+    return { success: true, message: "Password successfully updated." };    } catch (error) {
         return { success: false, message: "Something went wrong!" };
     }
 }

@@ -1,10 +1,11 @@
+import Description from "components/common/Description/Description";
 import React from "react";
 
 function NotFound() {
     return (
         <div>
             <h1>404</h1>
-            <p>Page not found</p>
+            <Description>Page not found</Description>
         </div>
     );
 }

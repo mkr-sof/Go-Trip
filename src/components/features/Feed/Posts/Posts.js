@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts } from "store/modules/postsSlice";
 import PostCard from "components/features/Feed/Posts/PostCard/PostCard";
 import styles from "./Posts.module.scss";
+import Description from "components/common/Description/Description";
 
 function Posts() {
     const dispatch = useDispatch();
@@ -15,7 +16,7 @@ function Posts() {
     return (
         <div className={styles.postsContainer}>
             {filteredPosts.length === 0 ? (
-                <p>No posts available</p>
+            <Description>No posts available</Description>
             ) : (
                 filteredPosts.map((post) => (
                     <PostCard key={post.id} post={post} />
