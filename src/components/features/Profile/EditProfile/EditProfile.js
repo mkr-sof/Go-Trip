@@ -6,6 +6,7 @@ import { saveDataToLocalStorage } from "services/storageService";
 import InputField from "components/common/InputField/InputField";
 import FileUpload from "components/common/FileUpload/FileUpload";
 import Button from "components/common/Button/Button";
+import Error from "components/common/Error/Error";
 import styles from "./EditProfile.module.scss";
 
 function EditProfile() {
@@ -26,20 +27,30 @@ function EditProfile() {
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
-                setImage(reader.result); 
+                setImage(reader.result);
             };
             reader.readAsDataURL(file);
         }
     };
 
     const handleRemoveImage = () => {
-        setImage(null); 
+        setImage(null);
     };
 
     const handleSaveUser = (event) => {
         event.preventDefault();
+
+        if (newPassword && newPassword.length < 6) {
+            setError("Password must be at least 6 characters.");
+            setNewPassword("");
+            setConfirmPassword("");
+            return;
+        }
+
         if (newPassword && newPassword !== confirmPassword) {
             setError("Passwords do not match!");
+            setNewPassword("");
+            setConfirmPassword("");
             return;
         }
         const updatedUser = {
@@ -59,7 +70,7 @@ function EditProfile() {
     return (
         <>
             <h2>Edit Profile</h2>
-            {error && <p className={styles.error}>{error}</p>}
+            {error && <Error message={error} />}
             <form className={styles.formContainer} noValidate onSubmit={handleSaveUser}>
                 <InputField
                     label="Full Name"
@@ -74,20 +85,40 @@ function EditProfile() {
                     placeholder=" "
                     value={email}
                     disabled
+                    onChange={() => { }}
+                    className={styles.authInput}
                 />
                 <InputField
                     label="New Password"
                     type="password"
                     placeholder=" "
                     value={newPassword}
-                    onChange={(event) => setNewPassword(event.target.value)}
+                    onChange={(event) => {
+                        const value = event.target.value;
+                        setNewPassword(value);
+                        if (value && value.length < 6) {
+                            setError("Password must be at least 6 characters.");
+                        } else if (confirmPassword && value !== confirmPassword) {
+                            setError("Passwords do not match!");
+                        } else {
+                            setError("");
+                        }
+                    }}
                 />
                 <InputField
                     label="Confirm New Password"
                     type="password"
                     placeholder=" "
                     value={confirmPassword}
-                    onChange={(event) => setConfirmPassword(event.target.value)}
+                    onChange={(event) => {
+                        const value = event.target.value;
+                        setConfirmPassword(value);
+                        if (newPassword && newPassword !== value) {
+                            setError("Passwords do not match!");
+                        } else {
+                            setError("");
+                        }
+                    }} 
                 />
                 <FileUpload
                     image={image}

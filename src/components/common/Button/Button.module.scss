@@ -10,3 +10,9 @@ button {
       background: #2f33a1;
   }
 }
+button:disabled {
+  background-color: #a0a0a0;
+  color: #eee;
+  cursor: not-allowed;
+  opacity: 0.8;
+}

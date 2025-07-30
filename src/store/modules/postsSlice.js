@@ -96,7 +96,7 @@ const postsSlice = createSlice({
             }
 
             if (query) {
-                filtered = filtered.updatedPostfilter(post =>
+                filtered = filtered.filter(post =>
                     post.title.toLowerCase().includes(query.toLowerCase())
                 );
             }

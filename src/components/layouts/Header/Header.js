@@ -85,7 +85,7 @@ function Header() {
                         onClick={() => navigate("/profile")}
                     >
                         <Avatar 
-                        src={user?.avatar ? user.avatar : "/default-avatar.png"}
+                        src={user?.avatar}
                         className={styles.avatar} 
                         />
                     </div>

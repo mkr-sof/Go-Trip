@@ -6,7 +6,7 @@ import { setPosts } from "../../store/modules/postsSlice";
 import Header from "components/layouts/Header/Header";
 import Content from "components/layouts/Content/Content";
 import Sidebar from "components/layouts/Sidebar/Sidebar";
-import ErrorBoundary from "components/ErrorBoundary/ErrorBoundary";
+import ErrorBoundary from "components/errorBoundary/ErrorBoundary";
 import { getDataFromLocalStorage, removeDataFromLocalStorage } from "services/storageService";
 import { createTestUsers, createTestPosts, clearLocalStorage } from "services/storageService";
 import { getAllPosts } from "services/postService";

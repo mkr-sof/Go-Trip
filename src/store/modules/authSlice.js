@@ -24,13 +24,6 @@ const authSlice = createSlice({
             } else {
                 sessionStorage.setItem("profile", JSON.stringify(state.user));
             }
-            // if (action.payload) {
-            //     state.users = state.users.filter(user => user.id !== action.payload.id);
-            //     console.log("Updated users:", state.users);
-            //     state.users.push(action.payload);
-
-            //     saveDataToLocalStorage("users", state.users);
-            // }
         },
         updateUserPassword: (state, action) => {
             const { email, newPassword } = action.payload;

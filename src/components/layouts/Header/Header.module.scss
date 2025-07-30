@@ -6,15 +6,17 @@
     // background-color: #0D0D0D;
     background-color: transparent;
     box-shadow: 0 2px 9px rgba(0, 0, 0, 0.4);
+
     @media screen and (max-width: 600px) {
         flex-direction: column;
         align-items: stretch;
-      }
+    }
 }
 
 .logo {
     cursor: pointer;
 }
+
 .logo:hover {
     transform: scale(1.05);
     transition: transform 0.3s ease;
@@ -29,23 +31,24 @@
 .rightSection {
     display: flex;
     align-items: center;
-    gap: 20px;  
+    gap: 20px;
 }
-.navbar, .rightSection {
+
+.navbar,
+.rightSection {
     @media screen and (max-width: 600px) {
-      justify-content: center;
-      width: 100%;
-    }
-  }
-.searchInput {
-    width: 200px; 
-    transition: width 0.3s ease;
-    @media screen and (max-width: 768px) {
-        width: 120px;
-        
+        justify-content: center;
+        width: 100%;
     }
 }
 
+.searchInput {
+  width: 100%;
+  max-width: 120px;
+  transition: width 0.3s ease;
+//  @media (min-width: 769px) { max-width: 160px; }
+//   @media (min-width: 1121px) { max-width: 200px; }
+}
 .avatarContainer {
     width: 40px;
     height: 40px;
@@ -65,6 +68,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
 .avatar:hover {
     transform: scale(1.05);
     transition: transform 0.3s ease;

@@ -5,6 +5,7 @@ import { signupUser } from "services/authService";
 import { setProfile, setUsers } from "store/modules/authSlice";
 import { ReactComponent as EyeIcon } from "assets/svgs/eye.svg";
 import { ReactComponent as EyeOffIcon } from "assets/svgs/eye-off.svg";
+import { validationRules, validateField } from "validations/formValidation";
 import Error from "components/common/Error/Error";
 import InputField from "components/common/InputField/InputField";
 import Button from "components/common/Button/Button";
@@ -12,80 +13,54 @@ import styles from "./Auth.module.scss";
 import Description from "components/common/Description/Description";
 
 function Signup({ onClick }) {
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
+    const [requestData, setRequestData] = useState({
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: ""
+    });
+
+    const { name, email, password, confirmPassword } = requestData;
 
     const [errors, setErrors] = useState({});
     const [touched, setTouched] = useState({});
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
 
-
     const [submitError, setSubmitError] = useState("");
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const users = useSelector((state) => state.auth.users);
-    const validateField = (field, value) => {
-        switch (field) {
-            case "name":
-                if (!value.trim()) return "Name is required";
-                break;
-            case "email":
-                if (!value) return "Email is required";
-
-                if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value))
-                    return "Invalid email address";
-                break;
-            case "password":
-                if (!value) return "Password is required";
-                if (value.length < 6) return "Must be at least 6 characters";
-                break;
-            case "confirmPassword":
-                if (!value) return "Please confirm your password";
-                if (value !== password) return "Passwords do not match";
-                break;
-            default:
-                return "";
-        }
-        return "";
-    };
-
     const handleBlur = (e) => {
         const { name, value } = e.target;
         setTouched((t) => ({ ...t, [name]: true }));
         setErrors((errs) => ({
             ...errs,
-            [name]: validateField(name, value),
+            [name]: validateField(name, value, requestData),
         }));
     };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-
         // update value
-        if (name === "name") setName(value);
-        if (name === "email") setEmail(value);
-        if (name === "password") setPassword(value);
-        if (name === "confirmPassword") setConfirmPassword(value);
-
+        setRequestData((prev) => ({ ...prev, [name]: value }));
         // re‑validate live if already touched
         if (touched[name]) {
             setErrors((errs) => ({
                 ...errs,
-                [name]: validateField(name, value),
+                [name]: validateField(name, value, {
+                    ...requestData,
+                    [name]: value, // update the specific field being changed
+                }),
             }));
         }
     };
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const newErrors = {
-            name: validateField("name", name),
-            email: validateField("email", email),
-            password: validateField("password", password),
-            confirmPassword: validateField("confirmPassword", confirmPassword),
-        };
+        const newErrors = Object.keys(validationRules).reduce((acc, key) => {
+            acc[key] = validateField(key, requestData[key], requestData);
+            return acc;
+        }, {});
         setErrors(newErrors);
         setTouched({ name: true, email: true, password: true, confirmPassword: true });
 
@@ -101,13 +76,11 @@ function Signup({ onClick }) {
 
             navigate("/");
 
-
         } catch (error) {
             console.error("Error during signup", error);
             setSubmitError(error.message)
         }
     }
-
 
     return (
         <div className={styles.authContainer}>
@@ -195,11 +168,10 @@ function Signup({ onClick }) {
             </form>
             <div>
                 <Description>Already have an account?<span className={styles.link} onClick={() => navigate("/login")}>  Login</span></Description>
-                
+
             </div>
         </div>
     );
 }
-
 
 export default Signup;

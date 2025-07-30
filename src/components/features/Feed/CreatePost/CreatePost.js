@@ -5,6 +5,7 @@ import InputField from "components/common/InputField/InputField";
 import Button from "components/common/Button/Button";
 import SelectField from "components/common/SelectField/SelectField";
 import FileUpload from "components/common/FileUpload/FileUpload";
+import Error from "components/common/Error/Error";
 import { getCurrentUser, getUsers } from "services/userService";
 import { createPost, updatePost } from "store/modules/postsSlice";
 import { setUsers, setProfile } from "store/modules/authSlice";
@@ -20,6 +21,7 @@ function CreatePost({
     initialCreatedAt,
     isEditing = false,
 }) {
+    const [errors, setErrors] = useState({});
     const [title, setTitle] = useState(initialTitle || "");
     const [description, setDescription] = useState(initialDescription || "");
     const [image, setImage] = useState(initialImage || "");
@@ -40,8 +42,17 @@ function CreatePost({
 
     const handleCreatePost = async (event) => {
         event.preventDefault();
-        // if (!title && !description && !category) return;
+        const newErrors = {};
+        if (!title.trim()) newErrors.title = "Title is required.";
+        if (!description.trim()) newErrors.description = "Description is required.";
+        if (!category) newErrors.category = "Category is required.";
 
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            return;
+        }
+
+        setErrors({});
         const user = getCurrentUser();
 
         const updatedPost = {
@@ -64,10 +75,10 @@ function CreatePost({
         }
         const updatedUser = {
             ...user,
-            posts: [...user.posts, updatedPost], 
+            posts: [...user.posts, updatedPost],
         };
-    
-        dispatch(setProfile(updatedUser)); 
+
+        dispatch(setProfile(updatedUser));
         onPostCreated(result.payload);
         setTitle("");
         setDescription("");
@@ -83,28 +94,40 @@ function CreatePost({
     return (
         <div className={styles.createPostContainer}>
             <h3>{isEditing ? "Edit Post" : "Create a New Post"}</h3>
-            <form className={styles.formContainer} onSubmit={handleCreatePost}>
+            <form className={styles.formContainer} noValidate={true} onSubmit={handleCreatePost}>
                 <InputField
                     label="Title"
                     type="text"
                     placeholder=" "
                     value={title}
-                    onChange={(event) => setTitle(event.target.value)}
+                    onChange={(event) => {
+                        setTitle(event.target.value);
+                        if (errors.title) setErrors((prev) => ({ ...prev, title: "" }));
+                    }}
                 />
+                {errors.title && <Error message={errors.title} />}
                 <InputField
                     label="Description"
                     type="text"
                     placeholder=" "
                     value={description}
-                    onChange={(event) => setDescription(event.target.value)}
+                    onChange={(event) => {
+                        setDescription(event.target.value);
+                        if (errors.description) setErrors((prev) => ({ ...prev, description: "" }));
+                    }}
                 />
+                {errors.description && <Error message={errors.description} />}
                 <SelectField
                     label="Category"
                     value={category}
                     onRemoveImage={handleRemoveImage}
-                    onChange={(event) => setCategory(event.target.value)}
-                    options={["Adventure", "Nature", "City Trips", "Beach"]}
+                    onChange={(event) => {
+                        setCategory(event.target.value);
+                        if (errors.category) setErrors((prev) => ({ ...prev, category: "" }));
+                    }} options={["Adventure", "Nature", "City Trips", "Beach"]}
+
                 />
+                {errors.category && <Error message={errors.category} />}
                 <FileUpload
                     onRemoveImage={handleRemoveImage}
                     onChange={handleImageUpload}
