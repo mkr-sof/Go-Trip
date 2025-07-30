@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/Go-Trip/static/css/main.613af8f4.css",
-    "main.js": "/Go-Trip/static/js/main.f815898e.js",
+    "main.css": "/Go-Trip/static/css/main.3505b3d8.css",
+    "main.js": "/Go-Trip/static/js/main.d8301ac6.js",
     "static/media/default-avatar.jpg": "/Go-Trip/static/media/default-avatar.1360bed9da8958440802.jpg",
     "static/media/nature3.jpg": "/Go-Trip/static/media/nature3.a27b2a5b4da9f2c5b40f.jpg",
     "static/media/nature1.jpg": "/Go-Trip/static/media/nature1.b08cab4ce3f2e77d3957.jpg",
@@ -26,11 +26,11 @@
     "static/media/eye.svg": "/Go-Trip/static/media/eye.4fefec66d9b1917ee8bc1aa86d4e9029.svg",
     "static/media/search.svg": "/Go-Trip/static/media/search.779ee77806da77afeefd8ca30a4b5f4e.svg",
     "static/media/close.svg": "/Go-Trip/static/media/close.827761febea85c0be8820c90a5fafead.svg",
-    "main.613af8f4.css.map": "/Go-Trip/static/css/main.613af8f4.css.map",
-    "main.f815898e.js.map": "/Go-Trip/static/js/main.f815898e.js.map"
+    "main.3505b3d8.css.map": "/Go-Trip/static/css/main.3505b3d8.css.map",
+    "main.d8301ac6.js.map": "/Go-Trip/static/js/main.d8301ac6.js.map"
   },
   "entrypoints": [
-    "static/css/main.613af8f4.css",
-    "static/js/main.f815898e.js"
+    "static/css/main.3505b3d8.css",
+    "static/js/main.d8301ac6.js"
   ]
 }
