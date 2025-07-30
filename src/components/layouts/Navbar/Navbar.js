@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Popup from "components/common/Popup/Popup";
 import Button from "components/common/Button/Button";
 import CreatePost from "components/features/Feed/CreatePost/CreatePost";
-import { setPosts, filterPosts } from "store/modules/postsSlice";
+import { setPosts, filterPosts, resetFilter } from "store/modules/postsSlice";
 import { getDataFromLocalStorage } from "services/storageService";
 import classNames from "classnames";
 import styles from "./Navbar.module.scss";
@@ -46,7 +46,9 @@ function Navbar() {
 
     return (
         <nav className={styles.navbar}>
-            <Link to="/" className={styles.navItem}>Home</Link>
+            <Link to="/" 
+            className={styles.navItem} 
+            onClick={() => dispatch(resetFilter())}>Home</Link>
             {/* <Link to="/profile" className={styles.navItem}>Profile</Link> */}
             <div className={styles.dropdown} ref={dropdownRef}>
                 <button

@@ -96,10 +96,26 @@ const postsSlice = createSlice({
             }
 
             if (query) {
-                filtered = filtered.filter(post =>
-                    post.title.toLowerCase().includes(query.toLowerCase())
+                let search = filtered;
+
+                if (filter === "favorites") {
+                    search = state.posts.filter(post => state.favorites.includes(post.id));
+                } else if (filter === "author" && state.filterUserId) {
+                    search = filtered.filter(post => post.authorId === state.filterUserId);
+                } else if (filter === "category" && category) {
+                    const categoryToCheck = category.toLowerCase().replace(/\s+/g, '-');
+                    search = filtered.filter(post => {
+                        const postCategory = post.category?.toLowerCase().replace(/\s+/g, '-');
+                        return postCategory === categoryToCheck;
+                    });
+                }
+
+                filtered = search.filter(post =>
+                    post.title?.toLowerCase().includes(query.toLowerCase()) ||
+                    post.description?.toLowerCase().includes(query.toLowerCase())
                 );
             }
+
 
             state.filteredPosts = filtered.sort((a, b) => {
                 const aDate = new Date(a.updated_at || a.created_at);
@@ -138,25 +154,25 @@ const postsSlice = createSlice({
             });
             saveDataToLocalStorage("users", updatedUsers);
         },
-        searchPosts: (state, action) => {
-            const query = action.payload?.toLowerCase();
+        // searchPosts: (state, action) => {
+        //     const query = action.payload?.toLowerCase();
 
-            let search = state.posts;
+        //     let search = state.posts;
 
-            if (state.filter === "favorites") {
-                search = state.posts.filter(post => state.favorites.includes(post.id));
-            } else if (state.filter === "author" && state.filterUserId) {
-                search = state.posts.filter(post => post.authorId === state.filterUserId);
-            }
+        //     if (state.filter === "favorites") {
+        //         search = state.posts.filter(post => state.favorites.includes(post.id));
+        //     } else if (state.filter === "author" && state.filterUserId) {
+        //         search = state.posts.filter(post => post.authorId === state.filterUserId);
+        //     }
 
-            state.filteredPosts = search.filter((post) =>
-                post.title?.toLowerCase().includes(query) ||
-                post.description?.toLowerCase().includes(query)
-            );
+        //     state.filteredPosts = search.filter((post) =>
+        //         post.title?.toLowerCase().includes(query) ||
+        //         post.description?.toLowerCase().includes(query)
+        //     );
 
-            state.filterQuery = query;
-            state.filter = "search";
-        },
+        //     state.filterQuery = query;
+        //     state.filter = "search";
+        // },
 
         resetFilter: (state) => {
             state.filteredPosts = [...state.posts];
@@ -181,7 +197,7 @@ export const {
     toggleFavorite,
     updatePost,
     deletePost,
-    searchPosts,
+    // searchPosts,
     resetFilter,
     clearFavorites
 } = postsSlice.actions;
