@@ -183,7 +183,7 @@ const postsSlice = createSlice({
             state.favorites = [];
             const userId = action.payload;
             if (userId) {
-                removeDataFromLocalStorage(`favorites_${userId}`);
+                removeDataFromLocalStorage("favorites");
             }
         }
 
